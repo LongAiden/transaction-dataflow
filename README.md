@@ -77,13 +77,13 @@ The source code is organized into several directories:
     *   `gen_data_daily.py`: DAG for generating daily transaction data and ingesting it into Kafka. Located at `docker_all/dags/gen_data_daily.py`
     *   `gen_lxw_fts.py`: DAG for calculating weekly features using Spark. Located at `docker_all/dags/gen_lxw_fts.py`
 *   **`external_scripts/`**: Contains Python scripts executed by Airflow tasks.
-    *   `1_gen_transaction_data.py`: Generates pseudo-transaction data and sends it to Kafka. Located at `/home/longnv95/Coding/MLOPs/final_project/scripts/1_gen_transaction_data.py`
-    *   `2_calculate_features.py`: Calculates features from transaction data using Spark. Located at `/home/longnv95/Coding/MLOPs/final_project/scripts/2_calculate_features.py`
+    *   `1_gen_transaction_data.py`: Generates pseudo-transaction data and sends it to Kafka. Located at `scripts/1_gen_transaction_data.py`
+    *   `2_calculate_features.py`: Calculates features from transaction data using Spark. Located at `scripts/2_calculate_features.py`
 *   **`scripts/`**: Contains utility scripts.
-    *   `0_gen_user_table.py`: Generates user data and stores it in MinIO. Located at `/home/longnv95/Coding/MLOPs/final_project/scripts/0_gen_user_table.py`
-    *   `.env`: Contains environment variables for the scripts. Located at `/home/longnv95/Coding/MLOPs/final_project/scripts/.env`
+    *   `0_gen_user_table.py`: Generates user data and stores it in MinIO. Located at `scripts/0_gen_user_table.py`
+    *   `.env`: Contains environment variables for the scripts. Located at `/scripts/.env`
 *   **`trino/`**: Contains configuration files for Trino.
-    *   `catalog/lakehouse.properties`: Defines the connection to the Hive Metastore and MinIO for querying Delta Lake tables. Located at `/home/longnv95/Coding/MLOPs/final_project/docker_all/trino/catalog/lakehouse.properties`
+    *   `catalog/lakehouse.properties`: Defines the connection to the Hive Metastore and MinIO for querying Delta Lake tables. Located at `docker_all/trino/catalog/lakehouse.properties`
 
 ### Instructions
 
@@ -99,7 +99,7 @@ The source code is organized into several directories:
     ```shell
     mkdir ~/docker_all
     cd ~/docker_all
-    
+
     curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.8.0/docker-compose.yaml'
     ```
 
@@ -130,6 +130,16 @@ The source code is organized into several directories:
 6.  **Set the `AIRFLOW_UID`:**
 
     *   Ensure the `AIRFLOW_UID` environment variable is set correctly to avoid permission issues. This is often set in the `.env` file or directly in the `docker-compose.yaml`.  The current value is located at `docker_all/AIRFLOW_UID`
+    * Setup the password:
+    ```bash
+    docker compose exec airflow-webserver airflow users create \
+    --username admin \
+    --firstname Admin \
+    --lastname User \
+    --role Admin \
+    --email admin@example.com \
+    --password admin
+    ```
 
 7.  **Start the services:**
 
@@ -183,17 +193,21 @@ The source code is organized into several directories:
         num_sources_l1w INTEGER
     ) WITH (
         location = 's3://transaction-data/features/'
-    );```
+    );
+    ```
+    <img src="images/trino_config.png" alt="Trino Setup" width="1000"/>
 
 11. **Access Kafka UI:**
 
     *   Open your web browser and navigate to `http://localhost:8080`.
-
+    
+    <img src="images/kafka_topic.png" alt="Kafka Setup" width="1000"/>
 ## Conclusion
 
-### Images
+### Outputs
 
-*   Architecture diagrams and flow representations are located in the `images/` directory.
+*   Customer Table:<img src="images/trino_query_1.png" alt="Kafka Setup" width="1000"/>
+*   Transaction Table:<img src="images/trino_query_2.png" alt="Kafka Setup" width="1000"/>
 
 ### Summary
 
