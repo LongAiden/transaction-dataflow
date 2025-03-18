@@ -30,6 +30,8 @@ The data processing flow consists of multiple layers:
 *   **Query Layer (Trino):** Allows querying the processed data.
 *   **Consumption Layer:** Supports analytics applications and ML services.
 
+<img src="images/flowchart.png" alt="Airflow Setup" width="1000"/>
+
 ## Technology Stack
 
 1.  **Data Source**
@@ -195,7 +197,7 @@ The source code is organized into several directories:
         location = 's3://transaction-data/features/'
     );
     ```
-    <img src="images/trino_config.png" alt="Trino Setup" width="1000"/>
+    <img src="images/trino_config.png" alt="Trino Setup" width="800"/>
 
 11. **Access Kafka UI:**
 
