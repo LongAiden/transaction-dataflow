@@ -1,0 +1,26 @@
+[2025-03-14T16:05:18.471+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [queued]>
+[2025-03-14T16:05:18.492+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [queued]>
+[2025-03-14T16:05:18.493+0000] {taskinstance.py:2171} INFO - Starting attempt 9 of 10
+[2025-03-14T16:05:18.524+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): run_script> on 2025-03-10 22:00:00+00:00
+[2025-03-14T16:05:18.535+0000] {standard_task_runner.py:60} INFO - Started process 740 to run task
+[2025-03-14T16:05:18.548+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'run_script', 'scheduled__2025-03-10T22:00:00+00:00', '--job-id', '12', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmpu2aovv3c']
+[2025-03-14T16:05:18.550+0000] {standard_task_runner.py:88} INFO - Job 12: Subtask run_script
+[2025-03-14T16:05:18.683+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [running]> on host 91a15d92d4ed
+[2025-03-14T16:05:18.846+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='run_script' AIRFLOW_CTX_EXECUTION_DATE='2025-03-10T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='9' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-10T22:00:00+00:00'
+[2025-03-14T16:05:18.847+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-14T16:05:18.848+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', "\n        python /opt/***/external_scripts/gen_transaction_data.py {ti.xcom_pull(task_ids='get_date')} /opt/***/results\n        "]
+[2025-03-14T16:05:18.868+0000] {subprocess.py:86} INFO - Output:
+[2025-03-14T16:05:18.872+0000] {subprocess.py:93} INFO - /usr/bin/bash: -c: line 2: syntax error near unexpected token `('
+[2025-03-14T16:05:18.873+0000] {subprocess.py:93} INFO - /usr/bin/bash: -c: line 2: `        python /opt/***/external_scripts/gen_transaction_data.py {ti.xcom_pull(task_ids='get_date')} /opt/***/results'
+[2025-03-14T16:05:18.873+0000] {subprocess.py:97} INFO - Command exited with return code 2
+[2025-03-14T16:05:18.885+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/bash.py", line 212, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 2.
+[2025-03-14T16:05:18.892+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=gen_data_daily, task_id=run_script, execution_date=20250310T220000, start_date=20250314T160518, end_date=20250314T160518
+[2025-03-14T16:05:18.910+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 12 for task run_script (Bash command failed. The command returned a non-zero exit code 2.; 740)
+[2025-03-14T16:05:18.943+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-03-14T16:05:18.984+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,12 @@
+In order to use airflow with kafka and MinIO:
+- Dockerfile: Need to specify airflow-base and airflow-worker (build stages)
+    - airflow-base: This stage installs common dependencies like Java, build tools, and Python. It serves as a base for other stages.
+    - airflow-worker: This stage is based on airflow-base and installs worker-specific Python packages like pyspark, pydeequ, and other data-related libraries. 
+    => This stage is for Airflow worker nodes that execute tasks using these dependencies
+
+- YAML:
+    - /your/external/scripts:/opt/airflow/external_scripts  # Add this line to help airflow can access external scripts
+    - /your/external/output:/opt/airflow/results  # Add this line # Add this line to help airflow can access external folder
+    - Add build with context and target for airflow services => To reduce the time to build images. Only airflow-worker has pysaprk and other Python libraries
+    - Add mems to reduce resource consumption
+    - Add volumes for some services

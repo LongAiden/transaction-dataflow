@@ -1,0 +1,245 @@
+[2025-03-17T17:48:17.686+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.gen_data_daily scheduled__2025-03-06T22:00:00+00:00 [queued]>
+[2025-03-17T17:48:17.698+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.gen_data_daily scheduled__2025-03-06T22:00:00+00:00 [queued]>
+[2025-03-17T17:48:17.698+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-03-17T17:48:17.722+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): gen_data_daily> on 2025-03-06 22:00:00+00:00
+[2025-03-17T17:48:17.730+0000] {standard_task_runner.py:60} INFO - Started process 619 to run task
+[2025-03-17T17:48:17.735+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'gen_data_daily', 'scheduled__2025-03-06T22:00:00+00:00', '--job-id', '23', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmpiogducb8']
+[2025-03-17T17:48:17.736+0000] {standard_task_runner.py:88} INFO - Job 23: Subtask gen_data_daily
+[2025-03-17T17:48:17.810+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.gen_data_daily scheduled__2025-03-06T22:00:00+00:00 [running]> on host d107d9d70093
+[2025-03-17T17:48:17.932+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='gen_data_daily' AIRFLOW_CTX_EXECUTION_DATE='2025-03-06T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-06T22:00:00+00:00'
+[2025-03-17T17:48:17.933+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-17T17:48:17.934+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/1_gen_transaction_data.py 2025-03-07\n        ']
+[2025-03-17T17:48:17.947+0000] {subprocess.py:86} INFO - Output:
+[2025-03-17T17:48:18.795+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: connecting to kafka:29092 [('172.18.0.7', 29092) IPv4]
+[2025-03-17T17:48:18.796+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Probing node bootstrap-0 broker version
+[2025-03-17T17:48:18.796+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: Connection complete.
+[2025-03-17T17:48:18.901+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Broker version identified as 2.5.0
+[2025-03-17T17:48:18.901+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Set configuration api_version=(2, 5, 0) to skip auto check_version requests on startup
+[2025-03-17T17:48:18.901+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Probing node bootstrap-0 broker version
+[2025-03-17T17:48:19.004+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Broker version identified as 2.5.0
+[2025-03-17T17:48:19.005+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Set configuration api_version=(2, 5, 0) to skip auto check_version requests on startup
+[2025-03-17T17:48:19.010+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: connecting to kafka:29092 [('172.18.0.7', 29092) IPv4]
+[2025-03-17T17:48:19.011+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Probing node 1 broker version
+[2025-03-17T17:48:19.011+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: Connection complete.
+[2025-03-17T17:48:19.011+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connected> [IPv4 ('172.18.0.7', 29092)]>: Closing connection.
+[2025-03-17T17:48:19.123+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Broker version identified as 2.5.0
+[2025-03-17T17:48:19.124+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Set configuration api_version=(2, 5, 0) to skip auto check_version requests on startup
+[2025-03-17T17:48:19.128+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: connecting to kafka:29092 [('172.18.0.7', 29092) IPv4]
+[2025-03-17T17:48:19.128+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Probing node bootstrap-0 broker version
+[2025-03-17T17:48:19.129+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: Connection complete.
+[2025-03-17T17:48:19.232+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Broker version identified as 2.5.0
+[2025-03-17T17:48:19.234+0000] {subprocess.py:93} INFO - INFO:kafka.conn:Set configuration api_version=(2, 5, 0) to skip auto check_version requests on startup
+[2025-03-17T17:48:19.324+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: connecting to kafka:29092 [('172.18.0.7', 29092) IPv4]
+[2025-03-17T17:48:19.325+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.7', 29092)]>: Connection complete.
+[2025-03-17T17:48:19.326+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connected> [IPv4 ('172.18.0.7', 29092)]>: Closing connection.
+[2025-03-17T17:48:19.333+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.346+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.369+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.384+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.397+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.409+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.421+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.435+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.449+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.463+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.477+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.488+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.508+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.520+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.532+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.547+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.562+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.576+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.594+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.608+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.617+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.634+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.647+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.661+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.676+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.687+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.702+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.718+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.730+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.746+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.757+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.769+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.781+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.796+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.812+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.827+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.837+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.851+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.863+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.879+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.894+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.908+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.928+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.939+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.957+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.968+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.981+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:19.996+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.011+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.025+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.045+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.058+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.070+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.085+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.125+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.137+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.148+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.162+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.178+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.194+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.205+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.217+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.229+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.241+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.253+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.264+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.277+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.287+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.297+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.311+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.322+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.335+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.348+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.361+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.375+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.386+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.400+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.415+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.427+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.442+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.453+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.465+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.479+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.494+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.506+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.523+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.535+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.547+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.559+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.578+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.590+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.611+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.622+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.634+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.648+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.658+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.672+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.684+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.696+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.713+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.726+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.738+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.752+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.762+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.775+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.789+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.800+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.814+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.826+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.836+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.850+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.862+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.873+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.884+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.896+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.908+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.922+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.932+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.942+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.953+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.964+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.976+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:20.989+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.000+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.013+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.028+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.038+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.056+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.071+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.092+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.106+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.121+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.136+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.150+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.167+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.186+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.202+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.221+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.234+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.245+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.257+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.271+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.281+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.299+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.312+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.330+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.346+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.372+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.394+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.409+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.423+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.446+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.461+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.483+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.498+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.520+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.541+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.555+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.573+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.601+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.630+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.654+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.676+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.685+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.701+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.720+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.740+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.763+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.776+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.791+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.802+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.816+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.832+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.849+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.867+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.881+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.892+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.905+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.924+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.944+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.958+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:21.986+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.010+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.030+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.052+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.068+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.088+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.107+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.120+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.142+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.160+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.178+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.199+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.226+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.238+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.267+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.285+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.314+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.334+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.347+0000] {subprocess.py:93} INFO - INFO:__main__:Processed batch of 100 messages
+[2025-03-17T17:48:22.347+0000] {subprocess.py:93} INFO - INFO:__main__:Successfully sent 20000 messages to topic transaction_data
+[2025-03-17T17:48:22.348+0000] {subprocess.py:93} INFO - INFO:kafka.producer.kafka:Closing the Kafka producer with 9223372036.0 secs timeout.
+[2025-03-17T17:48:22.349+0000] {subprocess.py:93} INFO - INFO:kafka.conn:<BrokerConnection node_id=1 host=kafka:29092 <connected> [IPv4 ('172.18.0.7', 29092)]>: Closing connection.
+[2025-03-17T17:48:22.361+0000] {subprocess.py:93} INFO - Data retrieved! (20000, 6)
+[2025-03-17T17:48:22.363+0000] {subprocess.py:93} INFO - Data saved! /tmp/***tmput52m_y8
+[2025-03-17T17:48:22.363+0000] {subprocess.py:93} INFO - Topic creation issue (may already exist): [Error 36] TopicAlreadyExistsError: Request 'CreateTopicsRequest_v3(create_topic_requests=[(topic='transaction_data', num_partitions=1, replication_factor=1, replica_assignment=[], configs=[(config_key='retention.ms', config_value='172800000')])], timeout=30000, validate_only=False)' failed with response 'CreateTopicsResponse_v3(throttle_time_ms=0, topic_errors=[(topic='transaction_data', error_code=36, error_message="Topic 'transaction_data' already exists.")])'.
+[2025-03-17T17:48:22.364+0000] {subprocess.py:93} INFO - Data Ingested to Kafka!
+[2025-03-17T17:48:22.483+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-03-17T17:48:22.538+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=gen_data_daily, task_id=gen_data_daily, execution_date=20250306T220000, start_date=20250317T174817, end_date=20250317T174822
+[2025-03-17T17:48:22.606+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-03-17T17:48:22.640+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

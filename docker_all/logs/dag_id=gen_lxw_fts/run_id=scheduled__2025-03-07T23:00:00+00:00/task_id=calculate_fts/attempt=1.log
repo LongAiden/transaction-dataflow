@@ -1,0 +1,300 @@
+[2025-03-17T17:49:42.598+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_lxw_fts.calculate_fts scheduled__2025-03-07T23:00:00+00:00 [queued]>
+[2025-03-17T17:49:42.611+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_lxw_fts.calculate_fts scheduled__2025-03-07T23:00:00+00:00 [queued]>
+[2025-03-17T17:49:42.611+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-03-17T17:49:42.642+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): calculate_fts> on 2025-03-07 23:00:00+00:00
+[2025-03-17T17:49:42.648+0000] {standard_task_runner.py:60} INFO - Started process 812 to run task
+[2025-03-17T17:49:42.652+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_lxw_fts', 'calculate_fts', 'scheduled__2025-03-07T23:00:00+00:00', '--job-id', '42', '--raw', '--subdir', 'DAGS_FOLDER/gen_lxw_fts.py', '--cfg-path', '/tmp/tmper_e72je']
+[2025-03-17T17:49:42.653+0000] {standard_task_runner.py:88} INFO - Job 42: Subtask calculate_fts
+[2025-03-17T17:49:42.724+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_lxw_fts.calculate_fts scheduled__2025-03-07T23:00:00+00:00 [running]> on host d107d9d70093
+[2025-03-17T17:49:42.867+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_lxw_fts' AIRFLOW_CTX_TASK_ID='calculate_fts' AIRFLOW_CTX_EXECUTION_DATE='2025-03-07T23:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-07T23:00:00+00:00'
+[2025-03-17T17:49:42.868+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-17T17:49:42.869+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/2_calculate_features.py 2025-03-08\n        ']
+[2025-03-17T17:49:42.883+0000] {subprocess.py:86} INFO - Output:
+[2025-03-17T17:49:55.857+0000] {subprocess.py:93} INFO - :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2025-03-17T17:49:56.396+0000] {subprocess.py:93} INFO - Ivy Default Cache set to: /home/***/.ivy2/cache
+[2025-03-17T17:49:56.397+0000] {subprocess.py:93} INFO - The jars for the packages stored in: /home/***/.ivy2/jars
+[2025-03-17T17:49:56.412+0000] {subprocess.py:93} INFO - org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+[2025-03-17T17:49:56.413+0000] {subprocess.py:93} INFO - io.delta#delta-core_2.12 added as a dependency
+[2025-03-17T17:49:56.413+0000] {subprocess.py:93} INFO - org.apache.hadoop#hadoop-aws added as a dependency
+[2025-03-17T17:49:56.413+0000] {subprocess.py:93} INFO - com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2025-03-17T17:49:56.414+0000] {subprocess.py:93} INFO - :: resolving dependencies :: org.apache.spark#spark-submit-parent-179393a9-501d-47f0-ae41-23c297460841;1.0
+[2025-03-17T17:49:56.414+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-17T17:50:02.140+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 in central
+[2025-03-17T17:50:02.993+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 in central
+[2025-03-17T17:50:03.405+0000] {subprocess.py:93} INFO - 	found org.apache.kafka#kafka-clients;3.3.2 in central
+[2025-03-17T17:50:03.814+0000] {subprocess.py:93} INFO - 	found org.lz4#lz4-java;1.8.0 in central
+[2025-03-17T17:50:04.227+0000] {subprocess.py:93} INFO - 	found org.xerial.snappy#snappy-java;1.1.10.1 in central
+[2025-03-17T17:50:05.895+0000] {subprocess.py:93} INFO - 	found org.slf4j#slf4j-api;2.0.6 in central
+[2025-03-17T17:50:08.882+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+[2025-03-17T17:50:09.384+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+[2025-03-17T17:50:12.139+0000] {subprocess.py:93} INFO - 	found commons-logging#commons-logging;1.1.3 in central
+[2025-03-17T17:50:12.538+0000] {subprocess.py:93} INFO - 	found com.google.code.findbugs#jsr305;3.0.0 in central
+[2025-03-17T17:50:16.508+0000] {subprocess.py:93} INFO - 	found org.apache.commons#commons-pool2;2.11.1 in central
+[2025-03-17T17:50:16.970+0000] {subprocess.py:93} INFO - 	found io.delta#delta-core_2.12;2.4.0 in central
+[2025-03-17T17:50:17.381+0000] {subprocess.py:93} INFO - 	found io.delta#delta-storage;2.4.0 in central
+[2025-03-17T17:50:19.696+0000] {subprocess.py:93} INFO - 	found org.antlr#antlr4-runtime;4.9.3 in central
+[2025-03-17T17:50:22.473+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-aws;3.3.2 in central
+[2025-03-17T17:50:25.348+0000] {subprocess.py:93} INFO - 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2025-03-17T17:50:27.014+0000] {subprocess.py:93} INFO - 	found com.amazonaws#aws-java-sdk-bundle;1.12.261 in central
+[2025-03-17T17:50:27.207+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/spark/spark-sql-kafka-0-10_2.12/3.4.1/spark-sql-kafka-0-10_2.12-3.4.1.jar ...
+[2025-03-17T17:50:27.624+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1!spark-sql-kafka-0-10_2.12.jar (602ms)
+[2025-03-17T17:50:27.810+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/io/delta/delta-core_2.12/2.4.0/delta-core_2.12-2.4.0.jar ...
+[2025-03-17T17:50:28.562+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] io.delta#delta-core_2.12;2.4.0!delta-core_2.12.jar (936ms)
+[2025-03-17T17:50:28.747+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.2/hadoop-aws-3.3.2.jar ...
+[2025-03-17T17:50:29.027+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.hadoop#hadoop-aws;3.3.2!hadoop-aws.jar (464ms)
+[2025-03-17T17:50:33.700+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.261/aws-java-sdk-bundle-1.12.261.jar ...
+[2025-03-17T17:50:59.380+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] com.amazonaws#aws-java-sdk-bundle;1.12.261!aws-java-sdk-bundle.jar (30351ms)
+[2025-03-17T17:50:59.590+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/spark/spark-token-provider-kafka-0-10_2.12/3.4.1/spark-token-provider-kafka-0-10_2.12-3.4.1.jar ...
+[2025-03-17T17:50:59.784+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1!spark-token-provider-kafka-0-10_2.12.jar (398ms)
+[2025-03-17T17:50:59.973+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.2/kafka-clients-3.3.2.jar ...
+[2025-03-17T17:51:00.624+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.kafka#kafka-clients;3.3.2!kafka-clients.jar (840ms)
+[2025-03-17T17:51:00.808+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.0/jsr305-3.0.0.jar ...
+[2025-03-17T17:51:00.996+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] com.google.code.findbugs#jsr305;3.0.0!jsr305.jar (370ms)
+[2025-03-17T17:51:01.182+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.11.1/commons-pool2-2.11.1.jar ...
+[2025-03-17T17:51:01.380+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.commons#commons-pool2;2.11.1!commons-pool2.jar (383ms)
+[2025-03-17T17:51:01.566+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client-runtime/3.3.4/hadoop-client-runtime-3.3.4.jar ...
+[2025-03-17T17:51:04.403+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.hadoop#hadoop-client-runtime;3.3.4!hadoop-client-runtime.jar (3023ms)
+[2025-03-17T17:51:04.590+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar ...
+[2025-03-17T17:51:04.837+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.lz4#lz4-java;1.8.0!lz4-java.jar (432ms)
+[2025-03-17T17:51:05.026+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.10.1/snappy-java-1.1.10.1.jar ...
+[2025-03-17T17:51:05.370+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.xerial.snappy#snappy-java;1.1.10.1!snappy-java.jar(bundle) (532ms)
+[2025-03-17T17:51:05.556+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar ...
+[2025-03-17T17:51:05.747+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.slf4j#slf4j-api;2.0.6!slf4j-api.jar (375ms)
+[2025-03-17T17:51:05.962+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-client-api/3.3.4/hadoop-client-api-3.3.4.jar ...
+[2025-03-17T17:51:07.862+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.apache.hadoop#hadoop-client-api;3.3.4!hadoop-client-api.jar (2113ms)
+[2025-03-17T17:51:08.054+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar ...
+[2025-03-17T17:51:08.247+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] commons-logging#commons-logging;1.1.3!commons-logging.jar (383ms)
+[2025-03-17T17:51:08.432+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/io/delta/delta-storage/2.4.0/delta-storage-2.4.0.jar ...
+[2025-03-17T17:51:08.621+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] io.delta#delta-storage;2.4.0!delta-storage.jar (373ms)
+[2025-03-17T17:51:08.807+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.9.3/antlr4-runtime-4.9.3.jar ...
+[2025-03-17T17:51:09.023+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.antlr#antlr4-runtime;4.9.3!antlr4-runtime.jar (401ms)
+[2025-03-17T17:51:09.241+0000] {subprocess.py:93} INFO - downloading https://repo1.maven.org/maven2/org/wildfly/openssl/wildfly-openssl/1.0.7.Final/wildfly-openssl-1.0.7.Final.jar ...
+[2025-03-17T17:51:09.463+0000] {subprocess.py:93} INFO - 	[SUCCESSFUL ] org.wildfly.openssl#wildfly-openssl;1.0.7.Final!wildfly-openssl.jar (439ms)
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - :: resolution report :: resolve 30611ms :: artifacts dl 42443ms
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	:: modules in use:
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.12.261 from central in [default]
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	commons-logging#commons-logging;1.1.3 from central in [default]
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	io.delta#delta-core_2.12;2.4.0 from central in [default]
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	io.delta#delta-storage;2.4.0 from central in [default]
+[2025-03-17T17:51:09.464+0000] {subprocess.py:93} INFO - 	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-aws;3.3.2 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.kafka#kafka-clients;3.3.2 from central in [default]
+[2025-03-17T17:51:09.465+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	org.lz4#lz4-java;1.8.0 from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	org.slf4j#slf4j-api;2.0.6 from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	org.xerial.snappy#snappy-java;1.1.10.1 from central in [default]
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	:: evicted modules:
+[2025-03-17T17:51:09.466+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.11.1026 by [com.amazonaws#aws-java-sdk-bundle;1.12.261] in [default]
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	|                  |            modules            ||   artifacts   |
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	|      default     |   18  |   17  |   17  |   1   ||   17  |   17  |
+[2025-03-17T17:51:09.467+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-17T17:51:09.477+0000] {subprocess.py:93} INFO - :: retrieving :: org.apache.spark#spark-submit-parent-179393a9-501d-47f0-ae41-23c297460841
+[2025-03-17T17:51:09.478+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-17T17:51:09.755+0000] {subprocess.py:93} INFO - 	17 artifacts copied, 0 already retrieved (336291kB/277ms)
+[2025-03-17T17:51:15.437+0000] {subprocess.py:93} INFO - 25/03/17 17:51:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2025-03-17T17:51:17.824+0000] {subprocess.py:93} INFO - Setting default log level to "WARN".
+[2025-03-17T17:51:17.824+0000] {subprocess.py:93} INFO - To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[2025-03-17T17:51:33.696+0000] {subprocess.py:93} INFO - 25/03/17 17:51:33 ERROR Inbox: Ignoring error
+[2025-03-17T17:51:33.704+0000] {subprocess.py:93} INFO - org.apache.spark.SparkException: Exception thrown in awaitResult:
+[2025-03-17T17:51:33.704+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:322)
+[2025-03-17T17:51:33.704+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEnv.setupEndpointRefByURI(RpcEnv.scala:102)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEnv.setupEndpointRef(RpcEnv.scala:110)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.RpcUtils$.makeDriverRef(RpcUtils.scala:36)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.driverEndpoint$lzycompute(BlockManagerMasterEndpoint.scala:117)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$driverEndpoint(BlockManagerMasterEndpoint.scala:116)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.isExecutorAlive$lzycompute$1(BlockManagerMasterEndpoint.scala:611)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.isExecutorAlive$1(BlockManagerMasterEndpoint.scala:610)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:648)
+[2025-03-17T17:51:33.705+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:123)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+[2025-03-17T17:51:33.706+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.Thread.run(Thread.java:829)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - Caused by: org.apache.spark.rpc.RpcEndpointNotFoundException: Cannot find endpoint: spark://CoarseGrainedScheduler@d107d9d70093:39257
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$asyncSetupEndpointRefByURI$1(NettyRpcEnv.scala:148)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$asyncSetupEndpointRefByURI$1$adapted(NettyRpcEnv.scala:144)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future.$anonfun$flatMap$1(Future.scala:307)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transformWith$1(Promise.scala:41)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.707+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.708+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.processBatch$1(BatchingExecutor.scala:67)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.$anonfun$run$1(BatchingExecutor.scala:82)
+[2025-03-17T17:51:33.709+0000] {subprocess.py:93} INFO - 	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.run(BatchingExecutor.scala:59)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:875)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor.execute(BatchingExecutor.scala:110)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor.execute$(BatchingExecutor.scala:107)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:873)
+[2025-03-17T17:51:33.710+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.trySuccess(Promise.scala:94)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.trySuccess$(Promise.scala:94)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.trySuccess(Promise.scala:187)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.onSuccess$1(NettyRpcEnv.scala:225)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$askAbortable$5(NettyRpcEnv.scala:239)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$askAbortable$5$adapted(NettyRpcEnv.scala:238)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.711+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.712+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.713+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.success(Promise.scala:86)
+[2025-03-17T17:51:33.713+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.success$(Promise.scala:86)
+[2025-03-17T17:51:33.713+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.success(Promise.scala:187)
+[2025-03-17T17:51:33.713+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.LocalNettyRpcCallContext.send(NettyRpcCallContext.scala:50)
+[2025-03-17T17:51:33.713+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcCallContext.reply(NettyRpcCallContext.scala:32)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.RpcEndpointVerifier$$anonfun$receiveAndReply$1.applyOrElse(RpcEndpointVerifier.scala:31)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	... 8 more
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 25/03/17 17:51:33 WARN Executor: Issue communicating with driver in heartbeater
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - org.apache.spark.SparkException: Exception thrown in awaitResult:
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:322)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:101)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:85)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMaster.registerBlockManager(BlockManagerMaster.scala:80)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManager.reregister(BlockManager.scala:641)
+[2025-03-17T17:51:33.714+0000] {subprocess.py:93} INFO - 	at org.apache.spark.executor.Executor.reportHeartBeat(Executor.scala:1111)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at org.apache.spark.executor.Executor.$anonfun$heartbeater$1(Executor.scala:244)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:2088)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at org.apache.spark.Heartbeater$$anon$1.run(Heartbeater.scala:46)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+[2025-03-17T17:51:33.715+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.Thread.run(Thread.java:829)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - Caused by: org.apache.spark.SparkException: Exception thrown in awaitResult:
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:322)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEnv.setupEndpointRefByURI(RpcEnv.scala:102)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.RpcEnv.setupEndpointRef(RpcEnv.scala:110)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.RpcUtils$.makeDriverRef(RpcUtils.scala:36)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.driverEndpoint$lzycompute(BlockManagerMasterEndpoint.scala:117)
+[2025-03-17T17:51:33.716+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$driverEndpoint(BlockManagerMasterEndpoint.scala:116)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.isExecutorAlive$lzycompute$1(BlockManagerMasterEndpoint.scala:611)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.isExecutorAlive$1(BlockManagerMasterEndpoint.scala:610)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:648)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:123)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+[2025-03-17T17:51:33.717+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	... 3 more
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - Caused by: org.apache.spark.rpc.RpcEndpointNotFoundException: Cannot find endpoint: spark://CoarseGrainedScheduler@d107d9d70093:39257
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$asyncSetupEndpointRefByURI$1(NettyRpcEnv.scala:148)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$asyncSetupEndpointRefByURI$1$adapted(NettyRpcEnv.scala:144)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future.$anonfun$flatMap$1(Future.scala:307)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transformWith$1(Promise.scala:41)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.718+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.719+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.719+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.719+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.719+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.720+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.721+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.721+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.721+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.721+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.722+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:33)
+[2025-03-17T17:51:33.722+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.723+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.processBatch$1(BatchingExecutor.scala:67)
+[2025-03-17T17:51:33.723+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.$anonfun$run$1(BatchingExecutor.scala:82)
+[2025-03-17T17:51:33.723+0000] {subprocess.py:93} INFO - 	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+[2025-03-17T17:51:33.723+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+[2025-03-17T17:51:33.723+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor$Batch.run(BatchingExecutor.scala:59)
+[2025-03-17T17:51:33.724+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:875)
+[2025-03-17T17:51:33.725+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor.execute(BatchingExecutor.scala:110)
+[2025-03-17T17:51:33.725+0000] {subprocess.py:93} INFO - 	at scala.concurrent.BatchingExecutor.execute$(BatchingExecutor.scala:107)
+[2025-03-17T17:51:33.726+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:873)
+[2025-03-17T17:51:33.727+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.trySuccess(Promise.scala:94)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.trySuccess$(Promise.scala:94)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.trySuccess(Promise.scala:187)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.onSuccess$1(NettyRpcEnv.scala:225)
+[2025-03-17T17:51:33.728+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$askAbortable$5(NettyRpcEnv.scala:239)
+[2025-03-17T17:51:33.729+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcEnv.$anonfun$askAbortable$5$adapted(NettyRpcEnv.scala:238)
+[2025-03-17T17:51:33.729+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:64)
+[2025-03-17T17:51:33.729+0000] {subprocess.py:93} INFO - 	at org.apache.spark.util.ThreadUtils$$anon$1.execute(ThreadUtils.scala:99)
+[2025-03-17T17:51:33.729+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.ExecutionContextImpl$$anon$4.execute(ExecutionContextImpl.scala:138)
+[2025-03-17T17:51:33.729+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:72)
+[2025-03-17T17:51:33.730+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1(Promise.scala:288)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.$anonfun$tryComplete$1$adapted(Promise.scala:288)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:288)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete(Promise.scala:53)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.complete$(Promise.scala:52)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:187)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.success(Promise.scala:86)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.Promise.success$(Promise.scala:86)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at scala.concurrent.impl.Promise$DefaultPromise.success(Promise.scala:187)
+[2025-03-17T17:51:33.731+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.LocalNettyRpcCallContext.send(NettyRpcCallContext.scala:50)
+[2025-03-17T17:51:33.732+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.NettyRpcCallContext.reply(NettyRpcCallContext.scala:32)
+[2025-03-17T17:51:33.732+0000] {subprocess.py:93} INFO - 	at org.apache.spark.rpc.netty.RpcEndpointVerifier$$anonfun$receiveAndReply$1.applyOrElse(RpcEndpointVerifier.scala:31)
+[2025-03-17T17:51:33.732+0000] {subprocess.py:93} INFO - 	... 8 more
+[2025-03-17T17:51:42.074+0000] {subprocess.py:93} INFO - 25/03/17 17:51:42 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2025-03-17T17:51:44.966+0000] {subprocess.py:93} INFO - 25/03/17 17:51:44 WARN AdminClientConfig: These configurations '[key.deserializer, value.deserializer, enable.auto.commit, max.poll.records, auto.offset.reset]' were supplied but are not used yet.
+[2025-03-17T17:52:04.675+0000] {subprocess.py:93} INFO - [Stage 0:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1]                                                                                25/03/17 17:52:04 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+[2025-03-17T17:52:10.179+0000] {subprocess.py:93} INFO - [Stage 9:>                                                         (0 + 6) / 50][Stage 9:=>                                                        (1 + 6) / 50][Stage 9:====>                                                     (4 + 7) / 50][Stage 9:===========>                                             (10 + 6) / 50][Stage 9:===============>                                         (14 + 6) / 50][Stage 9:==================>                                      (16 + 6) / 50][Stage 9:====================>                                    (18 + 6) / 50][Stage 9:=======================>                                 (21 + 6) / 50][Stage 9:=============================>                           (26 + 6) / 50][Stage 9:=====================================>                   (33 + 6) / 50][Stage 9:============================================>            (39 + 6) / 50][Stage 9:====================================================>    (46 + 4) / 50]                                                                                kafka:29092 transaction_data
+[2025-03-17T17:52:10.180+0000] {subprocess.py:93} INFO - minio:9000 transaction-data
+[2025-03-17T17:52:11.052+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-03-17T17:52:11.085+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=gen_lxw_fts, task_id=calculate_fts, execution_date=20250307T230000, start_date=20250317T174942, end_date=20250317T175211
+[2025-03-17T17:52:11.121+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-03-17T17:52:11.140+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,16 @@
+[2025-03-14T17:32:10.219+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.get_date manual__2025-03-14T17:32:07.165897+00:00 [queued]>
+[2025-03-14T17:32:10.229+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.get_date manual__2025-03-14T17:32:07.165897+00:00 [queued]>
+[2025-03-14T17:32:10.230+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-03-14T17:32:10.242+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): get_date> on 2025-03-14 17:32:07.165897+00:00
+[2025-03-14T17:32:10.250+0000] {standard_task_runner.py:60} INFO - Started process 157 to run task
+[2025-03-14T17:32:10.253+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'get_date', 'manual__2025-03-14T17:32:07.165897+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmpw07bj45y']
+[2025-03-14T17:32:10.254+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask get_date
+[2025-03-14T17:32:10.319+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.get_date manual__2025-03-14T17:32:07.165897+00:00 [running]> on host e9f75e17acd8
+[2025-03-14T17:32:10.411+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='get_date' AIRFLOW_CTX_EXECUTION_DATE='2025-03-14T17:32:07.165897+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-14T17:32:07.165897+00:00'
+[2025-03-14T17:32:10.441+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2025-03-14T17:32:10.441+0000] {python.py:201} INFO - Done. Returned value was: 2025-03-15
+[2025-03-14T17:32:10.468+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=gen_data_daily, task_id=get_date, execution_date=20250314T173207, start_date=20250314T173210, end_date=20250314T173210
+[2025-03-14T17:32:10.516+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-03-14T17:32:10.549+0000] {taskinstance.py:3281} INFO - 1 downstream tasks scheduled from follow-on schedule check

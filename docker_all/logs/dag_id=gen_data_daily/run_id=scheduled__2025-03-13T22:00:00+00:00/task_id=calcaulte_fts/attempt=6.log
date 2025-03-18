@@ -1,0 +1,81 @@
+[2025-03-15T18:07:29.134+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [queued]>
+[2025-03-15T18:07:29.153+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [queued]>
+[2025-03-15T18:07:29.153+0000] {taskinstance.py:2171} INFO - Starting attempt 6 of 7
+[2025-03-15T18:07:29.193+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): calcaulte_fts> on 2025-03-13 22:00:00+00:00
+[2025-03-15T18:07:29.209+0000] {standard_task_runner.py:60} INFO - Started process 3300 to run task
+[2025-03-15T18:07:29.223+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'calcaulte_fts', 'scheduled__2025-03-13T22:00:00+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmp2rz8w34s']
+[2025-03-15T18:07:29.226+0000] {standard_task_runner.py:88} INFO - Job 16: Subtask calcaulte_fts
+[2025-03-15T18:07:29.333+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [running]> on host 1e3bcc32b6c1
+[2025-03-15T18:07:29.509+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='calcaulte_fts' AIRFLOW_CTX_EXECUTION_DATE='2025-03-13T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='6' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-13T22:00:00+00:00'
+[2025-03-15T18:07:29.511+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-15T18:07:29.512+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/2_calculate_features.py 2025-03-14\n        ']
+[2025-03-15T18:07:29.535+0000] {subprocess.py:86} INFO - Output:
+[2025-03-15T18:07:41.346+0000] {subprocess.py:93} INFO - :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2025-03-15T18:07:41.655+0000] {subprocess.py:93} INFO - Ivy Default Cache set to: /home/***/.ivy2/cache
+[2025-03-15T18:07:41.658+0000] {subprocess.py:93} INFO - The jars for the packages stored in: /home/***/.ivy2/jars
+[2025-03-15T18:07:41.671+0000] {subprocess.py:93} INFO - org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+[2025-03-15T18:07:41.674+0000] {subprocess.py:93} INFO - io.delta#delta-core_2.12 added as a dependency
+[2025-03-15T18:07:41.675+0000] {subprocess.py:93} INFO - org.apache.hadoop#hadoop-aws added as a dependency
+[2025-03-15T18:07:41.677+0000] {subprocess.py:93} INFO - com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2025-03-15T18:07:41.678+0000] {subprocess.py:93} INFO - :: resolving dependencies :: org.apache.spark#spark-submit-parent-2af1bbfe-ab85-49b3-bd46-58f05e91a959;1.0
+[2025-03-15T18:07:41.678+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-15T18:07:42.114+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 in central
+[2025-03-15T18:07:42.211+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 in central
+[2025-03-15T18:07:42.262+0000] {subprocess.py:93} INFO - 	found org.apache.kafka#kafka-clients;3.3.2 in central
+[2025-03-15T18:07:42.297+0000] {subprocess.py:93} INFO - 	found org.lz4#lz4-java;1.8.0 in central
+[2025-03-15T18:07:42.326+0000] {subprocess.py:93} INFO - 	found org.xerial.snappy#snappy-java;1.1.10.1 in central
+[2025-03-15T18:07:42.359+0000] {subprocess.py:93} INFO - 	found org.slf4j#slf4j-api;2.0.6 in central
+[2025-03-15T18:07:42.426+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+[2025-03-15T18:07:42.473+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+[2025-03-15T18:07:42.528+0000] {subprocess.py:93} INFO - 	found commons-logging#commons-logging;1.1.3 in central
+[2025-03-15T18:07:42.555+0000] {subprocess.py:93} INFO - 	found com.google.code.findbugs#jsr305;3.0.0 in central
+[2025-03-15T18:07:42.576+0000] {subprocess.py:93} INFO - 	found org.apache.commons#commons-pool2;2.11.1 in central
+[2025-03-15T18:07:42.591+0000] {subprocess.py:93} INFO - 	found io.delta#delta-core_2.12;2.4.0 in central
+[2025-03-15T18:07:42.641+0000] {subprocess.py:93} INFO - 	found io.delta#delta-storage;2.4.0 in central
+[2025-03-15T18:07:42.660+0000] {subprocess.py:93} INFO - 	found org.antlr#antlr4-runtime;4.9.3 in central
+[2025-03-15T18:07:42.717+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-aws;3.3.2 in central
+[2025-03-15T18:07:42.756+0000] {subprocess.py:93} INFO - 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2025-03-15T18:07:42.788+0000] {subprocess.py:93} INFO - 	found com.amazonaws#aws-java-sdk-bundle;1.12.261 in central
+[2025-03-15T18:07:42.844+0000] {subprocess.py:93} INFO - :: resolution report :: resolve 1131ms :: artifacts dl 43ms
+[2025-03-15T18:07:42.844+0000] {subprocess.py:93} INFO - 	:: modules in use:
+[2025-03-15T18:07:42.845+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.12.261 from central in [default]
+[2025-03-15T18:07:42.845+0000] {subprocess.py:93} INFO - 	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+[2025-03-15T18:07:42.845+0000] {subprocess.py:93} INFO - 	commons-logging#commons-logging;1.1.3 from central in [default]
+[2025-03-15T18:07:42.846+0000] {subprocess.py:93} INFO - 	io.delta#delta-core_2.12;2.4.0 from central in [default]
+[2025-03-15T18:07:42.846+0000] {subprocess.py:93} INFO - 	io.delta#delta-storage;2.4.0 from central in [default]
+[2025-03-15T18:07:42.846+0000] {subprocess.py:93} INFO - 	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+[2025-03-15T18:07:42.846+0000] {subprocess.py:93} INFO - 	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+[2025-03-15T18:07:42.847+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-aws;3.3.2 from central in [default]
+[2025-03-15T18:07:42.847+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+[2025-03-15T18:07:42.851+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+[2025-03-15T18:07:42.851+0000] {subprocess.py:93} INFO - 	org.apache.kafka#kafka-clients;3.3.2 from central in [default]
+[2025-03-15T18:07:42.852+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-15T18:07:42.852+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-15T18:07:42.852+0000] {subprocess.py:93} INFO - 	org.lz4#lz4-java;1.8.0 from central in [default]
+[2025-03-15T18:07:42.854+0000] {subprocess.py:93} INFO - 	org.slf4j#slf4j-api;2.0.6 from central in [default]
+[2025-03-15T18:07:42.854+0000] {subprocess.py:93} INFO - 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2025-03-15T18:07:42.854+0000] {subprocess.py:93} INFO - 	org.xerial.snappy#snappy-java;1.1.10.1 from central in [default]
+[2025-03-15T18:07:42.854+0000] {subprocess.py:93} INFO - 	:: evicted modules:
+[2025-03-15T18:07:42.854+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.11.1026 by [com.amazonaws#aws-java-sdk-bundle;1.12.261] in [default]
+[2025-03-15T18:07:42.855+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:07:42.862+0000] {subprocess.py:93} INFO - 	|                  |            modules            ||   artifacts   |
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - 	|      default     |   18  |   0   |   0   |   1   ||   17  |   0   |
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - :: retrieving :: org.apache.spark#spark-submit-parent-2af1bbfe-ab85-49b3-bd46-58f05e91a959
+[2025-03-15T18:07:42.864+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-15T18:07:42.875+0000] {subprocess.py:93} INFO - 	0 artifacts copied, 17 already retrieved (0kB/14ms)
+[2025-03-15T18:07:43.535+0000] {subprocess.py:93} INFO - 25/03/15 18:07:43 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2025-03-15T18:07:44.280+0000] {subprocess.py:93} INFO - Setting default log level to "WARN".
+[2025-03-15T18:07:44.281+0000] {subprocess.py:93} INFO - To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[2025-03-15T18:08:19.413+0000] {subprocess.py:93} INFO - [Stage 0:>                                                          (0 + 0) / 1][Stage 0:>                                                          (0 + 1) / 1]                                                                                25/03/15 18:08:19 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2025-03-15T18:10:16.903+0000] {local_task_job_runner.py:302} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2025-03-15T18:10:16.904+0000] {process_utils.py:131} INFO - Sending 15 to group 3300. PIDs of all processes in the group: [3301, 3302, 3310, 3300]
+[2025-03-15T18:10:16.904+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 3300
+[2025-03-15T18:10:16.905+0000] {taskinstance.py:2451} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-03-15T18:10:16.906+0000] {subprocess.py:104} INFO - Sending SIGTERM signal to process group
+[2025-03-15T18:10:16.919+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=3302, status='terminated', started='18:07:29') (3302) terminated with exit code None
+[2025-03-15T18:10:17.055+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=3300, status='terminated', exitcode=0, started='18:07:28') (3300) terminated with exit code 0
+[2025-03-15T18:10:17.317+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=3301, status='terminated', started='18:07:29') (3301) terminated with exit code None
+[2025-03-15T18:10:17.750+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=3310, status='terminated', started='18:07:32') (3310) terminated with exit code None

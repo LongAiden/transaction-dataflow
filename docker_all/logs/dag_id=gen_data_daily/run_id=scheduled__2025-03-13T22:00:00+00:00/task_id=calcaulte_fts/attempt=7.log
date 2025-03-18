@@ -1,0 +1,154 @@
+[2025-03-15T18:10:47.085+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [queued]>
+[2025-03-15T18:10:47.099+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [queued]>
+[2025-03-15T18:10:47.100+0000] {taskinstance.py:2171} INFO - Starting attempt 7 of 8
+[2025-03-15T18:10:47.122+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): calcaulte_fts> on 2025-03-13 22:00:00+00:00
+[2025-03-15T18:10:47.136+0000] {standard_task_runner.py:60} INFO - Started process 3608 to run task
+[2025-03-15T18:10:47.145+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'calcaulte_fts', 'scheduled__2025-03-13T22:00:00+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmphawfvrqe']
+[2025-03-15T18:10:47.146+0000] {standard_task_runner.py:88} INFO - Job 17: Subtask calcaulte_fts
+[2025-03-15T18:10:47.247+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.calcaulte_fts scheduled__2025-03-13T22:00:00+00:00 [running]> on host 1e3bcc32b6c1
+[2025-03-15T18:10:47.510+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='calcaulte_fts' AIRFLOW_CTX_EXECUTION_DATE='2025-03-13T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='7' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-13T22:00:00+00:00'
+[2025-03-15T18:10:47.513+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-15T18:10:47.514+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/2_calculate_features.py 2025-03-14\n        ']
+[2025-03-15T18:10:47.546+0000] {subprocess.py:86} INFO - Output:
+[2025-03-15T18:10:58.667+0000] {subprocess.py:93} INFO - :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2025-03-15T18:10:58.952+0000] {subprocess.py:93} INFO - Ivy Default Cache set to: /home/***/.ivy2/cache
+[2025-03-15T18:10:58.955+0000] {subprocess.py:93} INFO - The jars for the packages stored in: /home/***/.ivy2/jars
+[2025-03-15T18:10:58.962+0000] {subprocess.py:93} INFO - org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+[2025-03-15T18:10:58.962+0000] {subprocess.py:93} INFO - io.delta#delta-core_2.12 added as a dependency
+[2025-03-15T18:10:58.962+0000] {subprocess.py:93} INFO - org.apache.hadoop#hadoop-aws added as a dependency
+[2025-03-15T18:10:58.963+0000] {subprocess.py:93} INFO - com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2025-03-15T18:10:58.963+0000] {subprocess.py:93} INFO - :: resolving dependencies :: org.apache.spark#spark-submit-parent-e1c86c86-0977-4c82-a119-7c18b50d8fb1;1.0
+[2025-03-15T18:10:58.963+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-15T18:10:59.334+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 in central
+[2025-03-15T18:10:59.424+0000] {subprocess.py:93} INFO - 	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 in central
+[2025-03-15T18:10:59.482+0000] {subprocess.py:93} INFO - 	found org.apache.kafka#kafka-clients;3.3.2 in central
+[2025-03-15T18:10:59.520+0000] {subprocess.py:93} INFO - 	found org.lz4#lz4-java;1.8.0 in central
+[2025-03-15T18:10:59.560+0000] {subprocess.py:93} INFO - 	found org.xerial.snappy#snappy-java;1.1.10.1 in central
+[2025-03-15T18:10:59.580+0000] {subprocess.py:93} INFO - 	found org.slf4j#slf4j-api;2.0.6 in central
+[2025-03-15T18:10:59.630+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+[2025-03-15T18:10:59.689+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+[2025-03-15T18:10:59.732+0000] {subprocess.py:93} INFO - 	found commons-logging#commons-logging;1.1.3 in central
+[2025-03-15T18:10:59.752+0000] {subprocess.py:93} INFO - 	found com.google.code.findbugs#jsr305;3.0.0 in central
+[2025-03-15T18:10:59.775+0000] {subprocess.py:93} INFO - 	found org.apache.commons#commons-pool2;2.11.1 in central
+[2025-03-15T18:10:59.809+0000] {subprocess.py:93} INFO - 	found io.delta#delta-core_2.12;2.4.0 in central
+[2025-03-15T18:10:59.873+0000] {subprocess.py:93} INFO - 	found io.delta#delta-storage;2.4.0 in central
+[2025-03-15T18:10:59.901+0000] {subprocess.py:93} INFO - 	found org.antlr#antlr4-runtime;4.9.3 in central
+[2025-03-15T18:10:59.960+0000] {subprocess.py:93} INFO - 	found org.apache.hadoop#hadoop-aws;3.3.2 in central
+[2025-03-15T18:10:59.990+0000] {subprocess.py:93} INFO - 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2025-03-15T18:11:00.005+0000] {subprocess.py:93} INFO - 	found com.amazonaws#aws-java-sdk-bundle;1.12.261 in central
+[2025-03-15T18:11:00.049+0000] {subprocess.py:93} INFO - :: resolution report :: resolve 1063ms :: artifacts dl 24ms
+[2025-03-15T18:11:00.049+0000] {subprocess.py:93} INFO - 	:: modules in use:
+[2025-03-15T18:11:00.050+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.12.261 from central in [default]
+[2025-03-15T18:11:00.050+0000] {subprocess.py:93} INFO - 	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+[2025-03-15T18:11:00.050+0000] {subprocess.py:93} INFO - 	commons-logging#commons-logging;1.1.3 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	io.delta#delta-core_2.12;2.4.0 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	io.delta#delta-storage;2.4.0 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-aws;3.3.2 from central in [default]
+[2025-03-15T18:11:00.051+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.apache.kafka#kafka-clients;3.3.2 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-sql-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.4.1 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.lz4#lz4-java;1.8.0 from central in [default]
+[2025-03-15T18:11:00.056+0000] {subprocess.py:93} INFO - 	org.slf4j#slf4j-api;2.0.6 from central in [default]
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	org.xerial.snappy#snappy-java;1.1.10.1 from central in [default]
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	:: evicted modules:
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.11.1026 by [com.amazonaws#aws-java-sdk-bundle;1.12.261] in [default]
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	|                  |            modules            ||   artifacts   |
+[2025-03-15T18:11:00.057+0000] {subprocess.py:93} INFO - 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2025-03-15T18:11:00.058+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:11:00.058+0000] {subprocess.py:93} INFO - 	|      default     |   18  |   0   |   0   |   1   ||   17  |   0   |
+[2025-03-15T18:11:00.061+0000] {subprocess.py:93} INFO - 	---------------------------------------------------------------------
+[2025-03-15T18:11:00.066+0000] {subprocess.py:93} INFO - :: retrieving :: org.apache.spark#spark-submit-parent-e1c86c86-0977-4c82-a119-7c18b50d8fb1
+[2025-03-15T18:11:00.066+0000] {subprocess.py:93} INFO - 	confs: [default]
+[2025-03-15T18:11:00.074+0000] {subprocess.py:93} INFO - 	0 artifacts copied, 17 already retrieved (0kB/13ms)
+[2025-03-15T18:11:00.677+0000] {subprocess.py:93} INFO - 25/03/15 18:11:00 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2025-03-15T18:11:01.290+0000] {subprocess.py:93} INFO - Setting default log level to "WARN".
+[2025-03-15T18:11:01.291+0000] {subprocess.py:93} INFO - To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[2025-03-15T18:11:36.797+0000] {subprocess.py:93} INFO - [Stage 0:>                                                          (0 + 1) / 1]                                                                                25/03/15 18:11:36 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2025-03-15T18:11:39.100+0000] {subprocess.py:93} INFO - kafka:29092 transaction_data
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - minio:9000 transaction-data
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - +-------+--------------+------+------+-------+----+---------+----+
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - |User ID|Transaction ID|Amount|Vendor|Sources|Time|timestamp|date|
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - +-------+--------------+------+------+-------+----+---------+----+
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - +-------+--------------+------+------+-------+----+---------+----+
+[2025-03-15T18:11:39.101+0000] {subprocess.py:93} INFO - 
+[2025-03-15T18:11:39.122+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2025-03-15T18:11:39.122+0000] {subprocess.py:93} INFO -   File "/opt/***/external_scripts/2_calculate_features.py", line 96, in <module>
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -     json_df.write \
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -   File "/opt/spark/python/pyspark/sql/readwriter.py", line 968, in save
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -     self._jwrite.save(path)
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -   File "/opt/spark/python/lib/py4j-0.10.9.5-src.zip/py4j/java_gateway.py", line 1321, in __call__
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -   File "/opt/spark/python/pyspark/sql/utils.py", line 190, in deco
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -     return f(*a, **kw)
+[2025-03-15T18:11:39.123+0000] {subprocess.py:93} INFO -   File "/opt/spark/python/lib/py4j-0.10.9.5-src.zip/py4j/protocol.py", line 326, in get_return_value
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - py4j.protocol.Py4JJavaError: An error occurred while calling o74.save.
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - : java.lang.NoClassDefFoundError: org/apache/spark/sql/catalyst/expressions/Empty2Null
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.delta.DeltaLog.startTransaction(DeltaLog.scala:214)
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.delta.DeltaLog.startTransaction(DeltaLog.scala:211)
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.delta.DeltaLog.withNewTransaction(DeltaLog.scala:227)
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.delta.commands.WriteIntoDelta.run(WriteIntoDelta.scala:93)
+[2025-03-15T18:11:39.124+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.delta.sources.DeltaDataSource.createRelation(DeltaDataSource.scala:180)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:47)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:75)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:73)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.command.ExecutedCommandExec.executeCollect(commands.scala:84)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:98)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:109)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:169)
+[2025-03-15T18:11:39.125+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:95)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:64)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:94)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:584)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:176)
+[2025-03-15T18:11:39.126+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:584)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:30)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:560)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:94)
+[2025-03-15T18:11:39.127+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:81)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:79)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:116)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:860)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:390)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.saveInternal(DataFrameWriter.scala:303)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:239)
+[2025-03-15T18:11:39.128+0000] {subprocess.py:93} INFO - 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at py4j.Gateway.invoke(Gateway.java:282)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+[2025-03-15T18:11:39.129+0000] {subprocess.py:93} INFO - 	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.Thread.run(Thread.java:829)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - Caused by: java.lang.ClassNotFoundException: org.apache.spark.sql.catalyst.expressions.Empty2Null
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+[2025-03-15T18:11:39.130+0000] {subprocess.py:93} INFO - 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+[2025-03-15T18:11:39.131+0000] {subprocess.py:93} INFO - 	... 46 more
+[2025-03-15T18:11:39.131+0000] {subprocess.py:93} INFO - 
+[2025-03-15T18:11:40.552+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-03-15T18:11:40.578+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/bash.py", line 212, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-03-15T18:11:40.614+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=gen_data_daily, task_id=calcaulte_fts, execution_date=20250313T220000, start_date=20250315T181047, end_date=20250315T181140
+[2025-03-15T18:11:40.660+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 17 for task calcaulte_fts (Bash command failed. The command returned a non-zero exit code 1.; 3608)
+[2025-03-15T18:11:40.678+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-03-15T18:11:40.732+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

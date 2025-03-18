@@ -1,0 +1,18 @@
+[2025-03-14T17:32:12.102+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.run_script manual__2025-03-14T17:32:07.165897+00:00 [queued]>
+[2025-03-14T17:32:12.113+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.run_script manual__2025-03-14T17:32:07.165897+00:00 [queued]>
+[2025-03-14T17:32:12.114+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-03-14T17:32:12.131+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): run_script> on 2025-03-14 17:32:07.165897+00:00
+[2025-03-14T17:32:12.138+0000] {standard_task_runner.py:60} INFO - Started process 159 to run task
+[2025-03-14T17:32:12.141+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'run_script', 'manual__2025-03-14T17:32:07.165897+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmperuwca4j']
+[2025-03-14T17:32:12.143+0000] {standard_task_runner.py:88} INFO - Job 4: Subtask run_script
+[2025-03-14T17:32:12.210+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.run_script manual__2025-03-14T17:32:07.165897+00:00 [running]> on host e9f75e17acd8
+[2025-03-14T17:32:12.455+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='run_script' AIRFLOW_CTX_EXECUTION_DATE='2025-03-14T17:32:07.165897+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-14T17:32:07.165897+00:00'
+[2025-03-14T17:32:12.457+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-14T17:32:12.460+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/gen_transaction_data.py 2025-03-15\n        ']
+[2025-03-14T17:32:12.482+0000] {subprocess.py:86} INFO - Output:
+[2025-03-14T17:32:14.912+0000] {subprocess.py:93} INFO - Data retrieved! (20000, 6)
+[2025-03-14T17:32:14.912+0000] {subprocess.py:93} INFO - Data saved! /tmp/***tmpixr2mmzz
+[2025-03-14T17:32:15.161+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-03-14T17:32:15.194+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=gen_data_daily, task_id=run_script, execution_date=20250314T173207, start_date=20250314T173212, end_date=20250314T173215
+[2025-03-14T17:32:15.239+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-03-14T17:32:15.262+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,39 @@
+[2025-03-14T16:10:04.448+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [queued]>
+[2025-03-14T16:10:04.461+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [queued]>
+[2025-03-14T16:10:04.462+0000] {taskinstance.py:2171} INFO - Starting attempt 15 of 16
+[2025-03-14T16:10:04.484+0000] {taskinstance.py:2192} INFO - Executing <Task(BashOperator): run_script> on 2025-03-10 22:00:00+00:00
+[2025-03-14T16:10:04.493+0000] {standard_task_runner.py:60} INFO - Started process 851 to run task
+[2025-03-14T16:10:04.496+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_data_daily', 'run_script', 'scheduled__2025-03-10T22:00:00+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/gen_data_daily.py', '--cfg-path', '/tmp/tmpwfuj0z92']
+[2025-03-14T16:10:04.498+0000] {standard_task_runner.py:88} INFO - Job 16: Subtask run_script
+[2025-03-14T16:10:04.566+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_data_daily.run_script scheduled__2025-03-10T22:00:00+00:00 [running]> on host 91a15d92d4ed
+[2025-03-14T16:10:04.693+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_data_daily' AIRFLOW_CTX_TASK_ID='run_script' AIRFLOW_CTX_EXECUTION_DATE='2025-03-10T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='15' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-10T22:00:00+00:00'
+[2025-03-14T16:10:04.694+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-14T16:10:04.694+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        python /opt/***/external_scripts/gen_transaction_data.py 2025-03-11\n        ']
+[2025-03-14T16:10:04.710+0000] {subprocess.py:86} INFO - Output:
+[2025-03-14T16:10:05.424+0000] {subprocess.py:93} INFO - Data retrieved! (20000, 6)
+[2025-03-14T16:10:05.425+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -   File "/opt/***/external_scripts/gen_transaction_data.py", line 56, in <module>
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -     df.to_parquet(f"/opt/***/results/transaction_{RUN_DATE_STR}.parquet", index=False)
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 2889, in to_parquet
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -     return to_parquet(
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.8/site-packages/pandas/io/parquet.py", line 411, in to_parquet
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -     impl.write(
+[2025-03-14T16:10:05.426+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.8/site-packages/pandas/io/parquet.py", line 161, in write
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO -     path_or_handle, handles, kwargs["filesystem"] = _get_path_or_handle(
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.8/site-packages/pandas/io/parquet.py", line 110, in _get_path_or_handle
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO -     handles = get_handle(
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO -   File "/home/***/.local/lib/python3.8/site-packages/pandas/io/common.py", line 868, in get_handle
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO -     handle = open(handle, ioargs.mode)
+[2025-03-14T16:10:05.427+0000] {subprocess.py:93} INFO - PermissionError: [Errno 13] Permission denied: '/opt/***/results/transaction_2025-03-11.parquet'
+[2025-03-14T16:10:05.501+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-03-14T16:10:05.518+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/bash.py", line 212, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-03-14T16:10:05.525+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=gen_data_daily, task_id=run_script, execution_date=20250310T220000, start_date=20250314T161004, end_date=20250314T161005
+[2025-03-14T16:10:05.547+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 16 for task run_script (Bash command failed. The command returned a non-zero exit code 1.; 851)
+[2025-03-14T16:10:05.635+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-03-14T16:10:05.680+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check
