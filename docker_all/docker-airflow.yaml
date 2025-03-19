@@ -177,6 +177,7 @@ services:
       DUMB_INIT_SETSID: 0
       AIRFLOW__CORE__PARALLELISM: 4
       AIRFLOW__CELERY__WORKER_CONCURRENCY: 2
+      SPARK_JARS_PACKAGES: "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.1,io.debezium:debezium-core:2.3.0.Final,io.debezium:debezium-connector-postgres:2.3.0.Final"
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
@@ -436,6 +437,34 @@ services:
       test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:29092", "--list"]
       interval: 10s
       timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: always
+
+  kafka-connect:
+    mem_limit: 1g
+    image: debezium/connect:2.3
+    ports:
+      - "8083:8083"
+    environment:
+      GROUP_ID: 1
+      BOOTSTRAP_SERVERS: kafka:29092
+      CONFIG_STORAGE_TOPIC: connect_configs
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      STATUS_STORAGE_TOPIC: connect_statuses
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/connectors"]
+      interval: 30s
+      timeout: 10s
       retries: 3
       start_period: 30s
     restart: always

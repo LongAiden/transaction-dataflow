@@ -27,6 +27,7 @@ with DAG(
     dag_id="gen_lxw_fts",
     schedule_interval="0 23 * * *",
     start_date=datetime(2025,3,7),
+    end_date=datetime(2025,3,18),
     default_args=default_args,
     catchup=True,
     tags=['workflow'],
