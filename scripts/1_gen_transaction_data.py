@@ -102,8 +102,8 @@ def ingest_data_to_kafka(df, topic_name: str, bootstrap_servers='kafka:29092', b
         client_id='admin'
     )
 
-    # Define retention period for 2 days in milliseconds (2 days = 2 * 24 * 60 * 60 * 1000)
-    retention_ms = str(2 * 24 * 60 * 60 * 1000)  # "172800000"
+    # Define retention period for 1 days in milliseconds (1 days = 21 * 24 * 60 * 60 * 1000)
+    retention_ms = str(1 * 24 * 60 * 60 * 1000)
 
     # Create a new topic with the specified retention policy
     new_topic = NewTopic(
