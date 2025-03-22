@@ -27,7 +27,7 @@ with DAG(
     dag_id="gen_data_daily",
     schedule_interval="0 22 * * *",
     start_date=datetime(2025,3,1),
-    end_date=datetime(2025,3,18),
+    end_date=datetime(2025,3,15),
     default_args=default_args,
     catchup=True,
     tags=['workflow'],
