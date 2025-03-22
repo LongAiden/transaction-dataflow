@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, te
 
 RUN_DATE_STR = sys.argv[1]
 
-def generate_pseudo_data(run_date_str, num_rows=20000, num_users=1000):
+def generate_pseudo_data(run_date_str, num_rows=5000, num_users=500):
     """Generates a Pandas DataFrame with pseudo transaction data."""
     # Generate pseudo user IDs
     user_ids = [f"user_{i:06d}" for i in np.random.choice(num_users, size=num_rows)]
@@ -51,7 +51,7 @@ def insert_data_to_postgres(df, table_name="transaction_data"):
     It uses SQLAlchemy to connect to PostgreSQL.
     """
     # Use connection string from environment or default to the Airflow connection string
-    postgres_conn_str = "postgresql+psycopg2://airflow:airflow@localhost/airflow"
+    postgres_conn_str = "postgresql+psycopg2://airflow:airflow@postgres/airflow"
     engine = create_engine(postgres_conn_str)
     
     try:

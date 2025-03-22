@@ -124,7 +124,7 @@ if __name__ == "__main__":
     cdc_df.show(5)
 
     # To get just the transaction data after the change
-    transaction_data_deleted = cdc_df.where('''op = 'd' ''').select('id')
+    transaction_data_deleted = cdc_df.where('''op = 'd' ''').select('before.id')
     transaction_data = cdc_df.where('''op in ('c','u')''').select(
         "op", 
         "after.id", 
@@ -144,7 +144,7 @@ if __name__ == "__main__":
                             .withColumn("timestamp", F.to_timestamp(F.col("Time"), "yyyy-MM-dd HH:mm:ss")) \
                             .withColumn("date", F.to_date(F.col("timestamp")))\
                             .where(f'''date between "{RUN_DATE_STR_7DAYS}" and "{RUN_DATE_STR}"''')\
-                            .drop(['timestamp', 'ts_ms','rank','id'])
+                            .drop('timestamp', 'ts_ms','rank','id')
 
     transaction_data.show(5)
 
