@@ -16,21 +16,25 @@
 
 ## Problem Statement
 
-The objective is to build an efficient, scalable, and flexible data processing pipeline that supports batch and streaming data ingestion while ensuring high-quality data output.
+The objective is to build an bacis data processing pipeline that supports batch and streaming data ingestion.
 
 ## Approach & Concept
 
 The data processing flow consists of multiple layers:
 
-*   **Ingestion Layer:** Captures data from sources such as transactions and customer information.
-*   **Storage Layer (MinIO - Bronze Layer):** Stores raw data in Parquet/ORC format.
-*   **Processing Layer (Spark Batch Processing):** Processes raw data into cleansed and validated formats.
-*   **Silver Layer:** Combines and joins data for further transformations.
-*   **Gold Layer:** Stores aggregated metrics, ML-ready features, and BI-ready tables.
-*   **Query Layer (Trino):** Allows querying the processed data.
-*   **Consumption Layer:** Supports analytics applications and ML services.
+*   **Source Layer:** PostgreSQL database storing transaction data
+*   **CDC Layer (Debezium):** Captures data changes from PostgreSQL and publishes to Kafka topics
+*   **Ingestion Layer:** 
+    * Batch: Direct data generation to PostgreSQL
+    * Streaming: Change data capture via Debezium-Kafka pipeline
+*   **Processing Layer:**
+    * Batch Processing: Spark jobs for feature engineering
+    * Stream Processing: Real-time CDC event processing
+*   **Storage Layer (MinIO):** 
+    * Captures processed CDC events from Kafka
+*   **Query Layer (Trino):** Allows querying the processed data across all layers
+*   **Consumption Layer:** Supports analytics applications and ML services
 
-<img src="images/flowchart.png" alt="Airflow Setup" width="1000"/>
 
 ## Technology Stack
 
@@ -46,18 +50,20 @@ The data processing flow consists of multiple layers:
                 StructField("Time", StringType(), True)
                 ])
     ```
-    * Transaction Data is generated daily
-    * Customer Data is generated one time and ingest to MinIO
-2.  **Ingestion**
+    * Transaction Data: Generated daily via `1_gen_transaction_data.py` and stored in PostgreSQL
+    * Customer Data: Generated once via `0_gen_user_table.py` and stored in MinIO as Parquet format
+2.  **CDC**
+    * Debezium
+3.  **Ingestion**
     *   Kafka
-3.  **Storage**
+4.  **Storage**
     *   MinIO on Kubernetes (Simulated Locally with Docker)
-4.  **Batch Processing**
+5.  **Batch Processing**
     *   Spark DataFrame
     *   Pandas
-5.  **Orchestration**
+6.  **Orchestration**
     *   Airflow
-6.  **Serving (Optional)**
+7.  **Serving (Optional)**
     *   BI Tool for Dashboarding (Using Trino)
     *   Using MinIO as Feature Store
 
@@ -67,9 +73,9 @@ The data processing flow consists of multiple layers:
 
 The project uses Docker and Docker Compose for easy deployment. Key files:
 
-*   **`docker-compose.yaml`**: Defines the services (Airflow, Kafka, MinIO, Trino, etc.) and their configurations. Located at `docker_all/docker-airflow.yaml`
+*   **`docker-compose-new.yaml`**: Defines the services (Airflow, Kafka, MinIO, Trino, etc.) and their configurations. Located at `docker_all/docker-airflow.yaml`
 
-*   **`config.Dockerfile`**: Defines the build steps for the Airflow images, including installing dependencies. Located at `docker_all/config.Dockerfile`
+*   **`Dockerfile`**: Defines the build steps for the Airflow images, including installing dependencies. Located at `docker_all/Dockerfile`
 
 ### Source Code
 
@@ -79,8 +85,10 @@ The source code is organized into several directories:
     *   `gen_data_daily.py`: DAG for generating daily transaction data and ingesting it into Kafka. Located at `docker_all/dags/gen_data_daily.py`
     *   `gen_lxw_fts.py`: DAG for calculating weekly features using Spark. Located at `docker_all/dags/gen_lxw_fts.py`
 *   **`external_scripts/`**: Contains Python scripts executed by Airflow tasks.
-    *   `1_gen_transaction_data.py`: Generates pseudo-transaction data and sends it to Kafka. Located at `scripts/1_gen_transaction_data.py`
-    *   `2_calculate_features.py`: Calculates features from transaction data using Spark. Located at `scripts/2_calculate_features.py`
+    *   `0_gen_user_table.py`: Generates customer demographic data and stores in MinIO as Parquet format
+    *   `0_register_debezium.py`: Registers Debezium connector to capture PostgreSQL changes
+    *   `1_gen_transaction_data.py`: Generates daily transaction data and stores in PostgreSQL
+    *   `2_calculate_features.py`: Reads CDC events from Kafka, calculates user features using Spark, and stores results in MinIO
 *   **`scripts/`**: Contains utility scripts.
     *   `0_gen_user_table.py`: Generates user data and stores it in MinIO. Located at `scripts/0_gen_user_table.py`
     *   `.env`: Contains environment variables for the scripts. Located at `/scripts/.env`
@@ -154,13 +162,42 @@ The source code is organized into several directories:
     *   Open your web browser and navigate to `http://localhost:9091`.
     <img src="images/airflow.png" alt="Airflow Setup" width="1000"/>
 
-9.  **Access MinIO:**
+9. **Access Kafka UI:**
 
-    *   Open your web browser and navigate to `http://localhost:9010`.
+    *   Open your web browser and navigate to `http://localhost:8080`.
+    
+    <img src="images/kafka_topic.png" alt="Kafka Setup" width="1000"/>
+
+10. **Access PostgreSQL:**
+    <img src="images/postgre_sql.png" alt="Kafka Setup" width="1000"/>
+
+11. **Registers Debezium Connector**
+    * Setup debezium config in `config/config_debezium.json`.
+    * Run script `0_register_debezium.py` to register Debezium connector to capture changes in the data source and stores them in Kafka topics.
+    * After running this script:
+    <img src="images/register_debezium.png" alt="Kafka Setup" width="1000"/>
+
+    <img src="images/kafka_debezium.png" alt="Kafka Setup" width="1000"/>
+
+12. **Generates user table (optional)**
+    * Run script `0_gen_user_table.py` to genetate user info and stores in MinIO bucket (`transaction-data-user`).
+    <img src="images/gen_user_profile_minio.png" alt="Kafka Setup" width="1000"/>
+
+13. **Using Airflow to setup workflow**  
+    * The pipeline consists of two main steps:
+        1. Transaction data generation and ingestion
+        2. Feature calculation and aggregation
+    * There are 2 seperate dags: daily data and agg data (7 days):
+        *  `gen_data_daily.py`
+        *  `gen_lxw_fts.py`
+    * Create pool `transaction_data` in Airflow UI (optional)
+
+14. **Access MinIO:**
+    * Open your web browser and navigate to `http://localhost:9010`.
     *   Use the credentials defined in the `.env` file (`S3_ACCESS_KEY` and `S3_SECRET_KEY`).
     <img src="images/minio.png" alt="MinIO Setup" width="1000"/>
 
-10. **Access Trino:**
+15. **Access Trino:**
 
     *   Open your web browser and navigate to `http://localhost:8081`.
     * Using Trino to connect to MinIO
@@ -198,12 +235,11 @@ The source code is organized into several directories:
     );
     ```
     <img src="images/trino_config.png" alt="Trino Setup" width="800"/>
-
-11. **Access Kafka UI:**
-
-    *   Open your web browser and navigate to `http://localhost:8080`.
     
-    <img src="images/kafka_topic.png" alt="Kafka Setup" width="1000"/>
+    * Additional SQL scripts can be found at **scripts/** 
+
+
+
 ## Conclusion
 
 ### Outputs
@@ -211,15 +247,8 @@ The source code is organized into several directories:
 *   Customer Table:<img src="images/trino_query_1.png" alt="Kafka Setup" width="1000"/>
 *   Transaction Table:<img src="images/trino_query_2.png" alt="Kafka Setup" width="1000"/>
 
-### Summary
-
-The project efficiently processes and ingests data into MinIO, ensuring high availability and usability for reporting and analytics.
-
 ### Future Expansion
-
-*   Implement CDC with Debezium for real-time data ingestion.
 *   Integrate Flink or Spark Streaming for real-time data processing.
 *   Add data quality checks using Deequ or Grafana
 *   Deploy the pipeline on a Kubernetes cluster for better scalability and resilience.
 *   Implement a feature store for managing and serving ML features.
-*   Integrate a BI tool for creating dashboards and visualizations.
