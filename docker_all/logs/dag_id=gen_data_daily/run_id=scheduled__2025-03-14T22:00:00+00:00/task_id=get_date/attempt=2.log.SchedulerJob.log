@@ -1,1 +1,0 @@
-[2025-03-17T15:19:51.327+0000] {scheduler_job_runner.py:781} ERROR - Executor reports task instance <TaskInstance: gen_data_daily.get_date scheduled__2025-03-14T22:00:00+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?
