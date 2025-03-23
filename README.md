@@ -67,6 +67,8 @@ The data processing flow consists of multiple layers:
     *   BI Tool for Dashboarding (Using Trino)
     *   Using MinIO as Feature Store
 
+    <img src="images/flowchart.png" alt="Airflow Setup" width="1000"/>
+
 ## Quickstart
 
 ### Docker Setup
