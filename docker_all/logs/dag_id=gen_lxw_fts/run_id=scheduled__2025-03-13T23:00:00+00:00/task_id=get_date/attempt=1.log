@@ -1,0 +1,16 @@
+[2025-03-22T18:22:39.308+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: gen_lxw_fts.get_date scheduled__2025-03-13T23:00:00+00:00 [queued]>
+[2025-03-22T18:22:39.322+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: gen_lxw_fts.get_date scheduled__2025-03-13T23:00:00+00:00 [queued]>
+[2025-03-22T18:22:39.322+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-03-22T18:22:39.352+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): get_date> on 2025-03-13 23:00:00+00:00
+[2025-03-22T18:22:39.359+0000] {standard_task_runner.py:60} INFO - Started process 6255 to run task
+[2025-03-22T18:22:39.363+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'gen_lxw_fts', 'get_date', 'scheduled__2025-03-13T23:00:00+00:00', '--job-id', '52', '--raw', '--subdir', 'DAGS_FOLDER/gen_lxw_fts.py', '--cfg-path', '/tmp/tmpneitgqx5']
+[2025-03-22T18:22:39.364+0000] {standard_task_runner.py:88} INFO - Job 52: Subtask get_date
+[2025-03-22T18:22:39.451+0000] {task_command.py:423} INFO - Running <TaskInstance: gen_lxw_fts.get_date scheduled__2025-03-13T23:00:00+00:00 [running]> on host 8d12aff548d4
+[2025-03-22T18:22:39.607+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='longnv' AIRFLOW_CTX_DAG_ID='gen_lxw_fts' AIRFLOW_CTX_TASK_ID='get_date' AIRFLOW_CTX_EXECUTION_DATE='2025-03-13T23:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-13T23:00:00+00:00'
+[2025-03-22T18:22:39.610+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2025-03-22T18:22:39.612+0000] {python.py:201} INFO - Done. Returned value was: 2025-03-14
+[2025-03-22T18:22:39.663+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=gen_lxw_fts, task_id=get_date, execution_date=20250313T230000, start_date=20250322T182239, end_date=20250322T182239
+[2025-03-22T18:22:39.717+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-03-22T18:22:39.758+0000] {taskinstance.py:3281} INFO - 1 downstream tasks scheduled from follow-on schedule check
