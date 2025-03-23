@@ -168,7 +168,7 @@ The source code is organized into several directories:
 
     *   Open your web browser and navigate to `http://localhost:8080`.
     
-    <img src="images/kafka_topic.png" alt="Kafka Setup" width="1000"/>
+    <img src="images/kafka_topic_debezium.png" alt="Kafka Setup" width="1000"/>
 
 10. **Access PostgreSQL:**
     <img src="images/postgre_sql.png" alt="Kafka Setup" width="1000"/>
