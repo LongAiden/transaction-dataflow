@@ -16,7 +16,7 @@
 
 ## Problem Statement
 
-The objective is to build an bacis data processing pipeline that supports batch and streaming data ingestion.
+The objective of this project is to build a data processing pipeline that supports both batch and streaming data ingestion. The data used in this project is a simplified version of transaction data commonly used in banking
 
 ## Approach & Concept
 
@@ -67,7 +67,7 @@ The data processing flow consists of multiple layers:
     *   BI Tool for Dashboarding (Using Trino)
     *   Using MinIO as Feature Store
 
-    <img src="images/flowchart.png" alt="Airflow Setup" width="1000"/>
+    <img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
 
 ## Quickstart
 
@@ -75,7 +75,7 @@ The data processing flow consists of multiple layers:
 
 The project uses Docker and Docker Compose for easy deployment. Key files:
 
-*   **`docker-compose-new.yaml`**: Defines the services (Airflow, Kafka, MinIO, Trino, etc.) and their configurations. Located at `docker_all/docker-airflow.yaml`
+*   **`docker-compose.yaml`**: Defines the services (Airflow, Kafka, MinIO, Trino, etc.) and their configurations. Located at `docker_all/docker-airflow.yaml`
 
 *   **`Dockerfile`**: Defines the build steps for the Airflow images, including installing dependencies. Located at `docker_all/Dockerfile`
 
@@ -109,9 +109,6 @@ The source code is organized into several directories:
 2.  **Create a folder to get yaml file for airflow:**
 
     ```shell
-    mkdir ~/docker_all
-    cd ~/docker_all
-
     curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.8.0/docker-compose.yaml'
     ```
 
@@ -120,7 +117,7 @@ The source code is organized into several directories:
     ```shell
     mkdir -p ./dags ./logs ./plugins ./scripts ./external_scripts ./results
 
-    sudo chmod -R 777 ./dags ./logs ./plugins ./scripts ./external_scripts ./results
+    sudo chmod -R 775 ./dags ./logs ./plugins ./scripts ./external_scripts ./results
     ```
 
 4.  **Build image with a custom Dockerfile:**

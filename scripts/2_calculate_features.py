@@ -188,4 +188,4 @@ if __name__ == "__main__":
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/features/")
+        .save(f"s3a://{bucket}/features/date={RUN_DATE_STR}")
