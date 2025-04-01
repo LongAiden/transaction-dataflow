@@ -20,6 +20,9 @@
       "schema.history.internal.kafka.topic": "schema-changes.postgres",
       "decimal.handling.mode": "string",
       "heartbeat.interval.ms": "5000",
-      "tombstones.on.delete": "false"
+      "tombstones.on.delete": "false",
+      "topic.creation.default.retention.ms": "86400000",
+      "topic.creation.default.replication.factor": "1",
+      "topic.creation.default.partitions": "1"
   }
 }

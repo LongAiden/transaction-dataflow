@@ -16,6 +16,7 @@ load_dotenv(dotenv_path)
 
 RUN_DATE_STR = sys.argv[1]
 RUN_DATE_STR_7DAYS = (dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d") - dt.timedelta(days=7)).strftime('%Y-%m-%d')
+print(RUN_DATE_STR_7DAYS, RUN_DATE_STR)
 
 if __name__ == "__main__":
     dotenv_path = os.path.join("./scripts/", '.env') 

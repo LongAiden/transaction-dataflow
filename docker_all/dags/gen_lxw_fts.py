@@ -9,6 +9,8 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy import DummyOperator
 from datetime import datetime, timedelta
 
+current_date_str = '{{(execution_date + macros.timedelta(days=0)).in_timezone("Asia/Ho_Chi_Minh").strftime("%Y-%m-%d")}}'
+
 default_args = {
     'owner': 'longnv',
     'retries': 1,
@@ -35,19 +37,12 @@ with DAG(
     start = DummyOperator(task_id="start")
     end = DummyOperator(task_id="end")
     
-    # Task to get the execution date
-    get_date = PythonOperator(
-        task_id='get_date',
-        python_callable=get_execution_date,
-        provide_context=True
-    )
-
     # Task to run the Python script
     calculate_fts = BashOperator(
         task_id='calculate_fts',
         bash_command=f'''
-        python /opt/airflow/external_scripts/2_calculate_features.py {{{{ ti.xcom_pull(task_ids='get_date') }}}}
+        python /opt/airflow/external_scripts/2_calculate_features.py {current_date_str}
         '''
     )
     
-    start >> get_date >> calculate_fts >> end
+    start >> calculate_fts >> end

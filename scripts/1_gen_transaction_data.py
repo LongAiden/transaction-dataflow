@@ -30,7 +30,7 @@ def generate_pseudo_data(run_date_str, num_rows=5000, num_users=500):
     
     # Generate pseudo times based on the run date
     start_date = dt.datetime.strptime(run_date_str, "%Y-%m-%d")
-    time_deltas = [dt.timedelta(seconds=np.random.randint(0, 31536000)) for _ in range(num_rows)]
+    time_deltas = [dt.timedelta(seconds=np.random.randint(0, 24*60*60)) for _ in range(num_rows)]
     times = [(start_date + delta).strftime('%Y-%m-%d %H:%M:%S') for delta in time_deltas]
     
     # Create the DataFrame
