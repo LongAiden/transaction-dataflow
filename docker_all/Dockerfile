@@ -32,15 +32,18 @@ FROM apache/airflow:2.8.0 AS airflow-base
 COPY --from=spark-base /opt/spark /opt/spark
 COPY --from=spark-base $JAVA_HOME /usr/lib/jvm/temurin-11-jdk-amd64
 USER root
+
 # Remove existing symlink or directory if it exists, then create a new one
 RUN [ -e /usr/lib/jvm/java-11-openjdk-amd64 ] && rm -rf /usr/lib/jvm/java-11-openjdk-amd64 || true &&
     ln -s /usr/lib/jvm/temurin-11-jdk-amd64 /usr/lib/jvm/java-11-openjdk-amd64
+
 # Set Java and Spark environment variables again
 ENV JAVA_HOME=/usr/lib/jvm/temurin-11-jdk-amd64
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$JAVA_HOME/bin:$SPARK_HOME/bin
 ENV PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9.7-src.zip"
 ENV PYSPARK_PYTHON=/usr/local/bin/python
+
 # Switch to airflow user for pip installations
 USER airflow
 # Install Python packages
