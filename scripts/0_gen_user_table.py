@@ -3,12 +3,8 @@ import os
 import datetime as dt
 import pandas as pd
 import numpy as np
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from pyspark.sql import types as T
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType
 from dotenv import load_dotenv
-from minio import Minio
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, text, Integer, Identity
 
 dotenv_path = os.path.join("./scripts", '.env')
 load_dotenv(dotenv_path)
@@ -27,8 +23,12 @@ def generate_user_data(num_rows=10000):
                             size=num_rows, p=[0.5, 0.4, 0.1])
 
     # Amounts
-    occupation = np.random.choice(["M", "F", "Other"], 
-                            size=num_rows, p=[0.5, 0.4, 0.1])
+    occupation = np.random.choice(
+            ["Software Engineer", "Teacher", "Doctor", "Sales", "Manager",
+            "Student", "Business Owner", "Accountant", "Researcher", "Others"], 
+            size=num_rows, 
+            p=[0.15, 0.12, 0.08, 0.13, 0.12, 0.1, 0.1, 0.08, 0.07, 0.05]
+    )
 
     # location
     location = np.random.choice(["City A", "City B", "City C", "City D", "City E", 
@@ -56,75 +56,56 @@ def generate_user_data(num_rows=10000):
         "day_start": day_start,
         
     })
+    
+    df = df.drop_duplicates(subset=["user_id"], keep="last")
 
     return df
 
-if __name__ == "__main__":
-    MINIO_ENDPOINT_LOCAL = os.getenv("S3_ENDPOINT_LOCAL")
-    MINIO_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
-    MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
-    MINIO_BUCKET_USER = os.getenv("MINIO_BUCKET_USER")
 
-    print(MINIO_ENDPOINT_LOCAL, MINIO_BUCKET_USER)   
+def insert_data_to_postgres(df, table_name="customer_data"):
+    postgres_conn_str = "postgresql+psycopg2://airflow:airflow@localhost/airflow"
+    engine = create_engine(postgres_conn_str)
+    
+    try:
+        # Define table metadata with primary key
+        metadata = MetaData()
+        transaction_table = Table(
+            table_name, metadata,
+            Column("user_id", String(255), primary_key=True),
+            Column("age", String(255)),
+            Column("gender", String(255)),
+            Column("location", String(255)),
+            Column("occupation", String(255)),
+            Column("day_start", String(255)),
+            schema='public'
+        )
+        
+        # Create the table in the database
+        metadata.create_all(engine)
+        
+        # Insert data into the table using pandas to_sql
+        df.to_sql(
+            name=table_name,
+            con=engine,
+            if_exists='append',
+            index=False,
+            schema='public'
+        )
 
+        # Verify the table exists
+        with engine.connect() as connection:
+            query = text(f"SELECT COUNT(*) FROM public.{table_name}")
+            result = connection.execute(query)
+            count = result.scalar()
+            print(f"Table contains {count} rows")
+    except Exception as e:
+        raise
+        
+if __name__ == "__main__": 
     # Generate and print the data
-    customer_df = generate_user_data(num_rows=5000)
+    customer_df = generate_user_data(num_rows=10000)
     print(customer_df.head())
-
-    # Create Spark session configured for MinIO (S3A)
-    spark = SparkSession.builder \
-        .appName("Weekly_Monthly_Feature_Calculation") \
-        .config("spark.jars.packages", 
-                "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.1,"
-                "io.delta:delta-core_2.12:2.4.0,"
-                "org.apache.hadoop:hadoop-aws:3.3.2,"
-                "com.amazonaws:aws-java-sdk-bundle:1.12.261") \
-        .config("spark.hadoop.fs.s3a.endpoint", "http://"+MINIO_ENDPOINT_LOCAL) \
-        .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY) \
-            .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY) \
-            .config("spark.hadoop.fs.s3a.path.style.access", "true") \
-            .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-            .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider") \
-            .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-            .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-            .master("local[*]")\
-            .getOrCreate()
     
-    # user_id  age gender location occupation   day_start
-    # Define the schema for customer df
-    schema = StructType([
-        StructField("user_id", StringType(), True),
-        StructField("age", IntegerType(), True),
-        StructField("gender", StringType(), True),
-        StructField("location", StringType(), True),
-        StructField("occupation", StringType(), True),
-        StructField("day_start", StringType(), True),
-    ])
+    insert_data_to_postgres(customer_df, table_name="customer_data")
+    print("Data inserted successfully.")
 
-    customer_df = spark.createDataFrame(customer_df, schema)
-    customer_df = customer_df.withColumn("day_start", F.to_date(F.col("day_start"), "yyyy-MM-dd"))
-    customer_df.show(5)
-
-
-    # Initialize MinIO client
-    minio_client = Minio(
-        MINIO_ENDPOINT_LOCAL,  # Your MinIO server endpoint
-        access_key=MINIO_ACCESS_KEY,
-        secret_key=MINIO_SECRET_KEY,
-        secure=False  # Set to True if using HTTPS
-    )
-
-    # Create bucket if it doesn't exist
-    bucket = MINIO_BUCKET_USER
-    if not minio_client.bucket_exists(bucket):
-        minio_client.make_bucket(bucket)
-
-    customer_df.write \
-        .format("delta") \
-        .mode("overwrite")\
-        .option("delta.columnMapping.mode", "name") \
-        .option("delta.minReaderVersion", "2") \
-        .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/demographic/")
-    
-    print(f"Data saved to MinIO in {MINIO_BUCKET_USER}!")
