@@ -165,7 +165,9 @@ if __name__ == "__main__":
                           F.min("Amount").alias(f"min_amount_{time_window}"),
                           F.max("Amount").alias(f"max_amount_{time_window}"),
                           F.countDistinct("Vendor").alias(f"num_vendors_{time_window}"),
-                          F.countDistinct("Sources").alias(f"num_sources_{time_window}"))
+                          F.countDistinct("Sources").alias(f"num_sources_{time_window}"))\
+                        .withColumnRenamed("User ID", "user_id")\
+                        .withColumn("date", F.lit(RUN_DATE_STR))
     
     agg_fts.show(5)
 
