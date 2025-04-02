@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     # To get just the transaction data after the change
     transaction_data_deleted = cdc_df.where('''op = 'd' ''').select('before.id')
-    transaction_data = cdc_df.where('''op in ('c','u')''').select(
+    transaction_data = cdc_df.where('''op in ('c','u','r')''').select(
         "op", 
         "after.id", 
         "after.`User ID`", 
@@ -185,8 +185,9 @@ if __name__ == "__main__":
 
     agg_fts.write \
         .format("delta") \
-        .mode("overwrite")\
+        .partitionBy("date") \
+        .mode("overwrite") \
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/features/date={RUN_DATE_STR}")
+        .save(f"s3a://{bucket}/features")
