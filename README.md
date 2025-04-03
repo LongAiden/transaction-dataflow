@@ -65,7 +65,6 @@ The data processing flow consists of multiple layers:
     *   Airflow
 7.  **Serving (Optional)**
     *   BI Tool for Dashboarding (Using Trino)
-    *   Using MinIO as Feature Store
 
     <img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
 
