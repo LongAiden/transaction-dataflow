@@ -187,7 +187,6 @@ if __name__ == "__main__":
 
     agg_fts.write \
         .format("delta") \
-        .partitionBy("date") \
         .mode("overwrite") \
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
