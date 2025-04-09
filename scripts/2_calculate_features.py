@@ -1,5 +1,6 @@
 import sys
 import os
+from utils import init_spark
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -37,24 +38,17 @@ if __name__ == "__main__":
     print(MINIO_ENDPOINT, MINIO_BUCKET)
 
     # Create Spark session configured for MinIO (S3A)
-    spark = SparkSession.builder \
-        .appName("Combined_CDC_PostgreSQL_Processing") \
-        .config("spark.jars.packages", 
-                "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.1,"
+    spark = init_spark("FeastDeltaExample")
+    spark.conf.set("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
+    spark.conf.set("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
+    spark.conf.set("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
+    spark.conf.set("spark.jars.packages",  "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.1,"
                 "io.delta:delta-core_2.12:2.4.0,"
                 "org.apache.hadoop:hadoop-aws:3.3.2,"
                 "com.amazonaws:aws-java-sdk-bundle:1.12.261,"
-                "org.postgresql:postgresql:42.5.1") \
-        .config("spark.hadoop.fs.s3a.endpoint", f"http://{MINIO_ENDPOINT}") \
-        .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY) \
-        .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY) \
-        .config("spark.hadoop.fs.s3a.path.style.access", "true") \
-        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-        .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider") \
-        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-        .master("local[*]") \
-        .getOrCreate()
+                "org.postgresql:postgresql:42.5.1")
+    spark.conf.set("spark.hadoop.fs.s3a.aws.credentials.provider", 
+                   "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
 
     cdc_events = spark.read \
         .format("kafka") \

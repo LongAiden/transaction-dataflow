@@ -1,7 +1,7 @@
-from datetime import timedelta, datetime
-from pathlib import Path
 import os
-from pyspark.sql import SparkSession
+from pathlib import Path
+from utils import init_spark
+from datetime import timedelta, datetime
 from feast import Entity, FeatureView, FeatureStore, Field
 from feast.types import Int64, Float32
 from feast.infra.offline_stores.contrib.spark_offline_store.spark_source import SparkSource
@@ -63,18 +63,11 @@ customer_features = FeatureView(
     ]
 )
 
-spark = SparkSession.builder \
-    .appName("FeastDeltaExample") \
-    .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0,org.apache.hadoop:hadoop-aws:3.3.1") \
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-    .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY) \
-    .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY) \
-    .config("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT_LOCAL) \
-    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-    .config("spark.hadoop.fs.s3a.path.style.access", "true") \
-    .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
-    .getOrCreate()
+# --- Initialize Spark Session ---
+spark = init_spark("FeastDeltaExample")
+spark.conf.set("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
+spark.conf.set("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
+spark.conf.set("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT_LOCAL)
 
 fs = FeatureStore('./feature_store')
 print("FeatureStore object created.")

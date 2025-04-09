@@ -66,7 +66,7 @@ RUN pip install --no-cache-dir --upgrade pip &&
         pandas \
         numpy \
         feast==0.36.0\
-        feast-spark==0.0.0
+        feast-spark==0.2.37
 
 FROM airflow-base AS airflow-worker
 # This stage now inherits everything from airflow-base

@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 from feast import FeatureStore
 from pathlib import Path
 import pandas as pd
+from utils import init_spark
 
 # Initialize feature store (only once)
 repo_path = Path(os.getcwd()).resolve().parent / "feature_store"
@@ -21,9 +22,7 @@ print(pd.DataFrame(features))
 
 
 # Example 2: Get online features and then convert to PySpark DataFrame
-spark = SparkSession.builder \
-    .appName("Feast_Demo") \
-    .getOrCreate()
+spark = init_spark("Feast_Demo")
     
 entity_pd_df = pd.DataFrame([{"user_id": "user_000066", "event_timestamp":"2025-03-18"}]) # Column event_timestamp is a feature date
 
