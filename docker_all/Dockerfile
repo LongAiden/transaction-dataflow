@@ -60,6 +60,7 @@ RUN pip install --no-cache-dir --upgrade pip &&
         confluent-kafka==2.3.0 \
         apache-airflow-providers-apache-kafka==1.3.1 \
         apache-airflow-providers-amazon==8.18.0 \
+        apache-flink==1.17.1 \
         sqlalchemy \
         psycopg2-binary \
         pandas \
