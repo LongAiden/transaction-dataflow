@@ -65,6 +65,7 @@ The data processing flow consists of multiple layers:
     *   Airflow
 7.  **Serving (Optional)**
     *   BI Tool for Dashboarding (Using Trino)
+    *   Feature Store with Feast
 
     <img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
 
@@ -97,6 +98,10 @@ The source code is organized into several directories:
     *   `catalog/lakehouse.properties`: Defines the connection to the Hive Metastore and MinIO for querying Delta Lake tables. Located at `docker_all/trino/catalog/lakehouse.properties`
 
 ### Instructions
+0.  **Prerequisites:**
+    *   Docker and Docker Compose installed.
+    *   Git (for cloning the repository).
+    *   `Requirements.txt` for testing in a local machine
 
 1.  **Clone the repository:**
 
@@ -236,17 +241,29 @@ The source code is organized into several directories:
     
     * Additional SQL scripts can be found at **scripts/** 
 
+16. **Feature Store with Feast:**
+    * In folder `feature_store`, there are 2 items: 
+        * Folder `data` which contains online_store.db and registry.db
+        * File config `feature_store.yaml` to create a Feature Store
+    * Register the feature views defined with `3_1_fs_register_table.py`
+    * Retrieve features using Feast `3_2_fs_get_features.py`. User can modify this script to get the ouput in PySpark DataFrame or Pandas DataFrame.
 
+    <img src="images/fs_for_inference.png" width="800"/>
+
+    <img src="images/fs_with_spark.png" width="800"/>
 
 ## Conclusion
 
 ### Outputs
 
-*   Customer Table:<img src="images/trino_query_1.png" alt="Kafka Setup" width="1000"/>
-*   Transaction Table:<img src="images/trino_query_2.png" alt="Kafka Setup" width="1000"/>
+*   Customer Table:<img src="images/trino_query_1.png" alt="Trino Setup" width="1000"/>
+*   Transaction Table:<img src="images/trino_query_2.png" alt="Trino Setup" width="1000"/>
 
 ### Future Expansion
-*   Integrate Flink or Spark Streaming for real-time data processing.
-*   Add data quality checks using Deequ or Grafana
-*   Deploy the pipeline on a Kubernetes cluster for better scalability and resilience.
-*   Implement a feature store for managing and serving ML features.
+
+*   **Real-time Stream Processing:** Implement Spark Structured Streaming or Flink jobs to process Kafka events in near real-time.
+*   **Monitoring & Alerting:** Integrate Prometheus and Grafana for monitoring system metrics and Kafka lags. Add alerting mechanisms.
+*   **Data Quality Checks:** Integrate tools like Great Expectations for data validation within the Airflow DAGs.
+*   **Model Training/Serving:** Add steps for training ML models using the features from MinIO or Feast and deploy models using tools like MLflow or Seldon Core.
+*   **Enhanced Security:** Implement more robust secrets management (e.g., HashiCorp Vault) instead of `.env` files for production environments.
+*   **Cloud Deployment:** Adapt the Docker Compose setup for deployment on cloud platforms like AWS EKS, GCP GKE, or Azure AKS using Helm charts or similar tools.
