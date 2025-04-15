@@ -16,7 +16,19 @@
 
 ## Problem Statement
 
-The objective of this project is to build a data processing pipeline that supports both batch and streaming data ingestion. The data used in this project is a simplified version of transaction data commonly used in banking
+The objective of this project is to build a robust Feature Store that processes and serves both historical and real-time banking transaction features. This Feature Store will:
+
+1. Ingest transaction data through dual paths:
+   - Batch processing of historical transaction records
+   - Real-time streaming of new transactions via CDC (Change Data Capture)
+
+2. Transform raw data into features for machine learning and serve features through a Feature Store:
+   - Calculate time-window aggregations (e.g., weekly transaction metrics)
+   - Offline store (MinIO) for model training
+   - Online store (SQLite) for real-time inference
+   - Unified feature retrieval API via Feast
+
+The system will serve as a centralized platform for managing ML features derived from banking transaction data, ensuring consistency between training and serving environments while supporting both batch and real-time feature computation.
 
 <img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
 
@@ -38,36 +50,20 @@ The data processing flow consists of multiple layers:
 *   **Consumption Layer:** Supports analytics applications and ML services
 
 
-## Technology Stack
-
-1.  **Data Source**
-    *   Self Generated Data:
-     ```shell
-        schema = StructType([
-                StructField("User ID", StringType(), True),
-                StructField("Transaction ID", StringType(), True),
-                StructField("Amount", DoubleType(), True),
-                StructField("Vendor", StringType(), True),
-                StructField("Sources", StringType(), True),
-                StructField("Time", StringType(), True)
-                ])
+## Data Source
+*   Self Generated Data:
+    ```shell
+    schema = StructType([
+            StructField("User ID", StringType(), True),
+            StructField("Transaction ID", StringType(), True),
+            StructField("Amount", DoubleType(), True),
+            StructField("Vendor", StringType(), True),
+            StructField("Sources", StringType(), True),
+            StructField("Time", StringType(), True)
+            ])
     ```
-    * Transaction Data: Generated daily via `1_gen_transaction_data.py` and stored in PostgreSQL
-    * Customer Data: Generated once via `0_gen_user_table.py` and stored in MinIO as Parquet format
-2.  **CDC**
-    * Debezium
-3.  **Ingestion**
-    *   Kafka
-4.  **Storage**
-    *   MinIO on Kubernetes (Simulated Locally with Docker)
-5.  **Batch Processing**
-    *   Spark DataFrame
-    *   Pandas
-6.  **Orchestration**
-    *   Airflow
-7.  **Serving (Optional)**
-    *   BI Tool for Dashboarding (Using Trino)
-    *   Feature Store with Feast
+* Transaction Data: Generated daily via `1_gen_transaction_data.py` and stored in PostgreSQL
+* Customer Data: Generated once via `0_gen_user_table.py` and stored in MinIO as Parquet format
 
 ## Quickstart
 
