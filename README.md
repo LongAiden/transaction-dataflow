@@ -18,6 +18,8 @@
 
 The objective of this project is to build a data processing pipeline that supports both batch and streaming data ingestion. The data used in this project is a simplified version of transaction data commonly used in banking
 
+<img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
+
 ## Approach & Concept
 
 The data processing flow consists of multiple layers:
@@ -66,8 +68,6 @@ The data processing flow consists of multiple layers:
 7.  **Serving (Optional)**
     *   BI Tool for Dashboarding (Using Trino)
     *   Feature Store with Feast
-
-    <img src="images/transaction-data-flow.png" alt="Airflow Setup" width="1000"/>
 
 ## Quickstart
 

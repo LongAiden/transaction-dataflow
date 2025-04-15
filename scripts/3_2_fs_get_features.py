@@ -4,11 +4,14 @@ from pathlib import Path
 import pandas as pd
 from utils import init_spark
 
+# Init Spark session
+spark = init_spark("Feast_Demo")
+
 # Initialize feature store (only once)
 repo_path = Path(os.getcwd()).resolve().parent / "feature_store"
 fs = FeatureStore(repo_path=repo_path)
 
-# Example 1: Get online features and then convert to pandas DataFrame
+# Example 1: Get online features
 features = fs.get_online_features(
     features=[
         "customer_features:num_transactions_l1w", 
@@ -20,10 +23,12 @@ features = fs.get_online_features(
 
 print(pd.DataFrame(features))
 
+# Convert the online features to a Spark DataFrame
+spark_online_df = spark.createDataFrame(pd.DataFrame(features))
+spark_online_df.show()
 
-# Example 2: Get online features and then convert to PySpark DataFrame
-spark = init_spark("Feast_Demo")
-    
+
+# Example 2: Get offline features => You need to provide event_timestamp as a feature date
 entity_pd_df = pd.DataFrame([{"user_id": "user_000066", "event_timestamp":"2025-03-18"}]) # Column event_timestamp is a feature date
 
 # Retrieve historical features using the Pandas DataFrame.
@@ -36,6 +41,8 @@ historical_features = fs.get_historical_features(
     ]
 )
 
-# Convert the historical features (which is a Pandas DataFrame) to a Spark DataFrame.
-spark_df = spark.createDataFrame(historical_features.to_df())
-spark_df.show()
+print(historical_features.to_df())
+
+# Convert the offline features to a Spark DataFrame
+spark_offline_df = spark.createDataFrame(historical_features.to_df())
+spark_offline_df.show()
