@@ -36,7 +36,7 @@ repo_path = Path(os.getcwd()).resolve().parent / "feature_store"
 customer = Entity(
     name="customer",
     join_keys=["user_id"],
-    description="Customer identifier"
+    description="Customer Identifier"
 )
 
 transaction_source = SparkSource(
@@ -51,7 +51,6 @@ customer_features = FeatureView(
     name="customer_features",
     entities=[customer],
     source=transaction_source,
-    ttl=timedelta(days=30),
     schema=[
        Field(name="num_transactions_l1w", dtype=Int64),
        Field(name="total_amount_l1w", dtype=Float32),

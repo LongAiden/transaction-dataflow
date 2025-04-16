@@ -1,10 +1,10 @@
-# MLOPs Final Project: Data Processing Pipeline
+# MLOps Project: Design and Implement a Feature Store for Banking Analytics
 
 ## Table of Contents
 
 1.  [Problem Statement](#problem-statement)
 2.  [Approach & Concept](#approach--concept)
-3.  [Technology Stack](#technology-stack)
+3.  [Data Source](#data-source)
 4.  [Quickstart](#quickstart)
     *   [Docker Setup](#docker-setup)
     *   [Source Code](#source-code)
@@ -243,6 +243,18 @@ The source code is organized into several directories:
         * File config `feature_store.yaml` to create a Feature Store
     * Register the feature views defined with `3_1_fs_register_table.py`
     * Retrieve features using Feast `3_2_fs_get_features.py`. User can modify this script to get the ouput in PySpark DataFrame or Pandas DataFrame.
+    * Feature tables `transaction-data`:
+    ```
+    schema=[
+       Field(name="num_transactions_l1w", dtype=Int64),
+       Field(name="total_amount_l1w", dtype=Float32),
+       Field(name="avg_amount_l1w", dtype=Float32),
+       Field(name="min_amount_l1w", dtype=Float32),
+       Field(name="max_amount_l1w", dtype=Float32),
+       Field(name="num_vendors_l1w", dtype=Int64),
+       Field(name="num_sources_l1w", dtype=Int64)
+    ]
+    ```
 
     <img src="images/fs_for_inference.png" width="800"/>
 

@@ -5,6 +5,9 @@ import sys
 import time
 import datetime as dt
 
+KAFKA_RETRIES = 30
+KAFKA_SLEEP = 5
+
 def check_connector_exists():
     try:
         response = requests.get('http://localhost:8083/connectors/postgres-connector')
@@ -28,12 +31,12 @@ def register_connector():
         sys.exit(0)
 
     # Wait for Kafka Connect to be ready
-    retries = 30
+    retries = KAFKA_RETRIES
     while retries > 0:
         if check_kafka_connect_health():
             break
         print("Waiting for Kafka Connect to be ready...")
-        time.sleep(5)
+        time.sleep(KAFKA_SLEEP)
         retries -= 1
     
     if retries == 0:
@@ -58,7 +61,7 @@ def register_connector():
         if response.status_code == 201:
             print("Connector registered successfully")
             # Check connector status
-            time.sleep(2)  # Wait for connector to start
+            time.sleep(KAFKA_SLEEP)  # Wait for connector to start
             status_response = requests.get('http://localhost:8083/connectors/postgres-connector/status')
             print(f"Connector status: {status_response.json()}")
         else:
