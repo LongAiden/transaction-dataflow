@@ -1,6 +1,6 @@
 -- Create schema and tables in Trino
 CREATE SCHEMA IF NOT EXISTS lakehouse.project
-WITH (location = 's3://transaction-data-user/demographic');
+WITH (LOCATION = 's3://transaction-data-user/demographic');
 
 CREATE TABLE IF NOT EXISTS lakehouse.project.customer (
    user_id VARCHAR,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS lakehouse.project.customer (
    occupation VARCHAR,
    day_start DATE
 ) WITH (
- location = 's3://transaction-data-user/demographic'
+ LOCATION = 's3://transaction-data-user/demographic'
 );
 
 CREATE TABLE IF NOT EXISTS lakehouse.project.features (
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS lakehouse.project.features (
    num_vendors_l1w INTEGER,
    num_sources_l1w INTEGER
 ) WITH (
-   location = 's3://transaction-data/features'
+   LOCATION = 's3://transaction-data/features'
 );
 
 -- Select top n rows form Trino table
-select * from lakehouse.project.customer
-limit 10
+SELECT * FROM lakehouse.project.customer
+LIMIT 10

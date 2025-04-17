@@ -244,7 +244,7 @@ The source code is organized into several directories:
     * Register the feature views defined with `3_1_fs_register_table.py`
     * Retrieve features using Feast `3_2_fs_get_features.py`. User can modify this script to get the ouput in PySpark DataFrame or Pandas DataFrame.
     * Feature tables `transaction-data`:
-    ```
+    ```python
     schema=[
        Field(name="num_transactions_l1w", dtype=Int64),
        Field(name="total_amount_l1w", dtype=Float32),
@@ -255,10 +255,8 @@ The source code is organized into several directories:
        Field(name="num_sources_l1w", dtype=Int64)
     ]
     ```
-
+    * Get online features from sqlite DB
     <img src="images/fs_for_inference.png" width="800"/>
-
-    <img src="images/fs_with_spark.png" width="800"/>
 
 ## Conclusion
 

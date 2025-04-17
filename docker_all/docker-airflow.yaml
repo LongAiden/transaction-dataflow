@@ -29,7 +29,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ${AIRFLOW_PROJ_DIR:-.}/scripts:/opt/airflow/scripts
     - /home/longnv95/Coding/MLOPs/final_project/scripts:/opt/airflow/external_scripts  # Add this line
-    - /home/longnv95/Coding/MLOPs/final_project/data_daily:/opt/airflow/results  # Add this line
+    - /home/longnv95/Coding/MLOPs/final_project/feature_store:/opt/airflow/feature_store  # Add this line
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
