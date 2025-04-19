@@ -115,9 +115,9 @@ The source code is organized into several directories:
 3.  **Create folders for airflow setup:**
 
     ```shell
-    mkdir -p ./dags ./logs ./plugins ./scripts ./external_scripts ./results
+    mkdir -p ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
 
-    sudo chmod -R 775 ./dags ./logs ./plugins ./scripts ./external_scripts ./results
+    sudo chmod -R 775 ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
     ```
 
 4.  **Build image with a custom Dockerfile:**
@@ -131,7 +131,8 @@ The source code is organized into several directories:
 
     *   YAML: `docker_all/docker-airflow.yaml`
         *   `/your/external/scripts:/opt/airflow/external_scripts`  # Add this line to help airflow can access external scripts
-        *   `/your/external/output:/opt/airflow/results`  # Add this line # Add this line to help airflow can access external folder
+        *   `/your/external/output:/opt/airflow/results`  # Add this line to help airflow can access external folder
+        *   `/your/external/feature_store:/opt/airflow/feature_store`  # Add this line to help airflow can access feature store folder
         *   Add build with context and target for airflow services => To reduce the time to build images. Only airflow-worker has pysaprk and other Python libraries
         *   Add mems to reduce resource consumption
         *   Add volumes for some services
