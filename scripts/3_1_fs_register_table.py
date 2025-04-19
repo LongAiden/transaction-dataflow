@@ -34,7 +34,7 @@ DATA_PATH = f"s3a://{MINIO_BUCKET}/features/"
 logger.info(f"Expecting Delta table data at: {DATA_PATH}")
 
 # --- Feast Repository Path ---
-repo_path = script_dir + "feature_store"
+repo_path = "/opt/airflow/feature_store"
 
 # Define the entity (e.g., customer) with a join key
 customer = Entity(
