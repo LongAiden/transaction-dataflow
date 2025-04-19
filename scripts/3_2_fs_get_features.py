@@ -1,7 +1,8 @@
+import os
+import pandas as pd
 from pyspark.sql import SparkSession
 from feast import FeatureStore
 from pathlib import Path
-import pandas as pd
 from utils import init_spark
 
 # Init Spark session

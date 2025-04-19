@@ -2,6 +2,7 @@ import sys
 import datetime as dt
 import pandas as pd
 import numpy as np
+from utils import init_spark, get_logger
 from sqlalchemy import create_engine, MetaData, Table, Column, String, Float, text, Integer, Identity
 
 RUN_DATE_STR = sys.argv[1]
@@ -81,22 +82,25 @@ def insert_data_to_postgres(df, table_name="transaction_data"):
             schema='public'
         )
         
-        print(f"Successfully inserted {len(df)} rows into {table_name} table at {RUN_DATE_STR}")
+        logger.info(f"Successfully inserted {len(df)} rows into {table_name} table at {RUN_DATE_STR}")
 
         # Verify the table exists
         with engine.connect() as connection:
             query = text(f"SELECT COUNT(*) FROM public.{table_name}")
             result = connection.execute(query)
             count = result.scalar()
-            print(f"Table contains {count} rows")
+            logger.info(f"Checking table {table_name} contains {count} rows")
     except Exception as e:
+        logger.error(f"Error inserting data into PostgreSQL: {e}")
         raise
 
 if __name__ == "__main__":
+    log_file = f"/opt/airflow/logs/1_gen_transaction_data/{RUN_DATE_STR}.log"
+    logger = get_logger(__name__, log_file)
     # Generate pseudo transaction data
     df = generate_pseudo_data(RUN_DATE_STR)
     
     # Insert the pseudo data into PostgreSQL
     insert_data_to_postgres(df, table_name="transaction_data")
 
-    print(f"Data generation and insertion complete at {RUN_DATE_STR}")
+    logger.info(f"Data generation and insertion complete at {RUN_DATE_STR}")

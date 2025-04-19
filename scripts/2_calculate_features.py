@@ -1,6 +1,6 @@
 import sys
 import os
-from utils import init_spark
+from utils import init_spark, get_logger
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -22,6 +22,9 @@ print(RUN_DATE_STR_7DAYS, RUN_DATE_STR)
 if __name__ == "__main__":
     dotenv_path = os.path.join("./scripts/", '.env') 
     load_dotenv(dotenv_path)
+    
+    log_file = f"/opt/airflow/logs/2_calculate_fts/{RUN_DATE_STR}.log"
+    logger = get_logger(__name__, log_file)
 
     # Environment variables
     KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
@@ -34,21 +37,12 @@ if __name__ == "__main__":
     MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
     MINIO_BUCKET = os.getenv("MINIO_BUCKET")
 
-    print(KAFKA_BOOTSTRAP_SERVERS, CDC_TRANSACTION_TOPIC)
-    print(MINIO_ENDPOINT, MINIO_BUCKET)
+    # Log the values using the logger
+    logger.info(f"Kafka Bootstrap Servers: {KAFKA_BOOTSTRAP_SERVERS}, CDC Transaction Topic: {CDC_TRANSACTION_TOPIC}")
+    logger.info(f"MinIO Endpoint: {MINIO_ENDPOINT}, MinIO Bucket: {MINIO_BUCKET}")
 
     # Create Spark session configured for MinIO (S3A)
     spark = init_spark("FeastDeltaExample")
-    spark.conf.set("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
-    spark.conf.set("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
-    spark.conf.set("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
-    spark.conf.set("spark.jars.packages",  "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.1,"
-                "io.delta:delta-core_2.12:2.4.0,"
-                "org.apache.hadoop:hadoop-aws:3.3.2,"
-                "com.amazonaws:aws-java-sdk-bundle:1.12.261,"
-                "org.postgresql:postgresql:42.5.1")
-    spark.conf.set("spark.hadoop.fs.s3a.aws.credentials.provider", 
-                   "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
 
     cdc_events = spark.read \
         .format("kafka") \
@@ -145,9 +139,12 @@ if __name__ == "__main__":
 
     # Read streaming data from Kafka topic "cdc_transaction"
     distinct_dates = transaction_data.select("date").distinct().count()
+    logger.info(f"Distinct dates in the data: {distinct_dates}")
     
+    # Check if there are at least 7 distinct dates`
     if distinct_dates < 7:
-        print(f"Error: Found only {distinct_dates} distinct dates in the data. Minimum required is 7 days.")
+        # Log the values using the logger
+        logger.error(f"Error: Found only {distinct_dates} distinct dates in the data. Minimum required is 7 days.")
         sys.exit(1)
                 
     # Calculate lxw features
@@ -164,7 +161,6 @@ if __name__ == "__main__":
                         .withColumn("date", F.lit(RUN_DATE_STR))
     
     agg_fts.show(5)
-
 
     # Initialize MinIO client
     minio_client = Minio(
@@ -186,3 +182,6 @@ if __name__ == "__main__":
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
         .save(f"s3a://{bucket}/features")
+        
+    logger.info(f"Data written to MinIO bucket: {bucket}/features")
+    logger.info("Feature calculation completed successfully.")
