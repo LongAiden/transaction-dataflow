@@ -6,10 +6,11 @@ from pathlib import Path
 from utils import init_spark
 
 # Init Spark session
-spark = init_spark("Feast_Demo")
+spark = init_spark("Feast_Demo", local_mode=True) # local_mode=True for local testing
 
-# Initialize feature store (only once)
-repo_path = Path(os.getcwd()).resolve().parent / "feature_store"
+# Initialize feature store
+# If you run this script in Airflow container repo_path should be /opt/airflow/feature_store
+repo_path = "feature_store" 
 fs = FeatureStore(repo_path=repo_path)
 
 # Example 1: Get online features

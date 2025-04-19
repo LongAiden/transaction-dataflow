@@ -3,26 +3,32 @@ import logging
 from dotenv import load_dotenv
 from pyspark.sql import SparkSession
 
-dotenv_path = os.path.join("/opt/airflow/external_scripts/", '.env')  # Assuming .env is in the same directory
-load_dotenv(dotenv_path)
-
-# Load environment variables
-MINIO_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
-MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
-S3_ENDPOINT = os.getenv("S3_ENDPOINT")
-
 # Create a spark session with Delta Lake and S3A support
-def init_spark(spark_app_name:str):
+def init_spark(spark_app_name:str, local_mode:bool=False) -> SparkSession:
     """
     This function initializes a Spark session with Delta Lake and S3A support.
     It also configures the session to use local mode and sets the timezone to UTC.
     The function returns the initialized Spark session.
     Args:
         spark_app_name: Name of the Spark session
-
+        local_mode: Boolean flag to indicate if local mode should be used (default is False)
     Returns:
         Spark session object
     """
+    if local_mode: 
+        dotenv_path = os.path.join("./scripts/", '.env')
+        load_dotenv(dotenv_path)
+        S3_ENDPOINT = os.getenv("S3_ENDPOINT_LOCAL")
+    else:
+        dotenv_path = os.path.join("/opt/airflow/external_scripts/", '.env')
+        load_dotenv(dotenv_path)
+        S3_ENDPOINT = os.getenv("S3_ENDPOINT")
+        
+    # Load environment variables
+    MINIO_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
+    MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
+    
+        
     spark = (SparkSession.builder \
         .appName(spark_app_name) \
         .config("spark.jars.packages", 

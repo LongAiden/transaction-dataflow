@@ -191,6 +191,7 @@ The source code is organized into several directories:
         *  `gen_data_daily.py`
         *  `gen_lxw_fts.py`
     * Create pool `transaction_data` in Airflow UI (optional)
+    * Materialize features and write to an online store
 
 14. **Access MinIO:**
     * Open your web browser and navigate to `http://localhost:9010`.
@@ -242,7 +243,7 @@ The source code is organized into several directories:
     * In folder `feature_store`, there are 2 items: 
         * Folder `data` which contains online_store.db and registry.db
         * File config `feature_store.yaml` to create a Feature Store
-    * Register the feature views defined with `3_1_fs_register_table.py`
+    * Register the feature views defined with `3_1_fs_register_table.py`. This step is already included in the `gen_lxw_features.py`
     * Retrieve features using Feast `3_2_fs_get_features.py`. User can modify this script to get the ouput in PySpark DataFrame or Pandas DataFrame.
     * Feature tables `transaction-data`:
     ```python
