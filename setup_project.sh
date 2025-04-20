@@ -2,22 +2,26 @@
 set -euo pipefail
 
 REPO_URL="https://github.com/LongAiden/transaction-dataflow.git"
+REPO_DIR="transaction-dataflow" # Added for clarity
 AIRFLOW_UID="${AIRFLOW_UID:-50000}"
 AIRFLOW_ADMIN_USER="admin"
 AIRFLOW_ADMIN_PASS="admin"
 AIRFLOW_ADMIN_EMAIL="admin@example.com"
 AIRFLOW_ADMIN_FIRST="Admin"
 AIRFLOW_ADMIN_LAST="User"
-WORKDIR="$(pwd)" # Define WORKDIR
 GROUP_ID=$(id -g) # Get current group id
 
 # ----------------------------------------
 echo "1. Cloning repository..."
+if [ -d "${REPO_DIR}" ]; then
+  echo "Removing existing directory: ${REPO_DIR}"
+  rm -rf "${REPO_DIR}"
+fi
 git clone "${REPO_URL}"
-cd "${WORKDIR}"
+cd "${REPO_DIR}"
 
 echo "2. Building Docker images..."
-docker-compose -f docker-airflow.yaml build --no-cache # Explicitly use no-cache to ensure updated dependencies
+docker-compose -f docker-airflow.yaml build --no-cache
 docker-compose -f docker-airflow.yaml up -d
 
 echo "3. Creating Airflow directories and setting permissions..."

@@ -98,36 +98,9 @@ The source code is organized into several directories:
     *   Docker and Docker Compose installed.
     *   Git (for cloning the repository).
     *   `Requirements.txt` for testing in a local machine
-
-1.  **Clone the repository:**
-
-    ```shell
-    git clone <repository_url>
-    cd <repository_directory>
-    ```
-
-2.  **Create a folder to get yaml file for airflow:**
-
-    ```shell
-    curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.8.0/docker-compose.yaml'
-    ```
-
-3.  **Create folders for airflow setup:**
-
-    ```shell
-    mkdir -p ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
-
-    sudo chmod -R 775 ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
-    ```
-
-4.  **Build image with a custom Dockerfile:**
-
-    *   Dockerfile: `docker_all/config.Dockerfile`
-        *   Need to specify `airflow-base` and `airflow-worker` (build stages)
-        *   `airflow-base`: This stage installs common dependencies like Java, build tools, and Python. It serves as a base for other stages.
-        *   `airflow-worker`: This stage is based on `airflow-base` and installs worker-specific Python packages like `pyspark`, `pydeequ`, and other data-related libraries. => This stage is for Airflow worker nodes that execute tasks using these dependencies
-
-5.  **Edit config YAML:**
+    *   File Bash: `setup_project.sh`
+  
+1.  **Edit config YAML:**
 
     *   YAML: `docker_all/docker-airflow.yaml`
         *   `/your/external/scripts:/opt/airflow/external_scripts`  # Add this line to help airflow can access external scripts
@@ -137,41 +110,74 @@ The source code is organized into several directories:
         *   Add mems to reduce resource consumption
         *   Add volumes for some services
 
-6.  **Set the `AIRFLOW_UID`:**
+2.  **Setup using `setup_project.sh`**:
+    * Open the terminal and run `chmod +x setup_airflow.sh` to make the script executable
+    * Open the terminal and run `bash ./setup_airflow.sh`
+    * This bash script includes these components:
 
-    *   Ensure the `AIRFLOW_UID` environment variable is set correctly to avoid permission issues. This is often set in the `.env` file or directly in the `docker-compose.yaml`.  The current value is located at `docker_all/AIRFLOW_UID`
-    * Setup the password:
-    ```bash
-    docker compose exec airflow-webserver airflow users create \
-    --username admin \
-    --firstname Admin \
-    --lastname User \
-    --role Admin \
-    --email admin@example.com \
-    --password admin
-    ```
+        *  **Repository Cloning:**
 
-7.  **Start the services:**
+            ```shell
+            git clone <repository_url>
+            cd <repository_directory>
+            ```
+
+        *  **Create folders for airflow setup:**
+
+            ```shell
+            mkdir -p ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
+            sudo chown -R "${AIRFLOW_UID}:${GROUP_ID}" ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
+            sudo chmod -R 775 ./dags ./logs ./plugins ./scripts ./external_scripts ./results ./feature_store
+            ```
+
+        *   **Build image with a custom Dockerfile:**
+        
+            ```shell
+            docker-compose -f docker-airflow.yaml build --no-cache
+            docker-compose -f docker-airflow.yaml up -d
+            ```
+
+            *   Need to specify `airflow-base` and `airflow-worker` (build stages)
+            *   `airflow-base`: This stage installs common dependencies like Java, build tools, and Python. It serves as a base for other stages.
+            *   `airflow-worker`: This stage is based on `airflow-base` and installs worker-specific Python packages like `pyspark`, `pydeequ`, and other data-related libraries. => This stage is for Airflow worker nodes that execute tasks using these dependencies.
+
+        * Setup Airflow user and password. Ensure the `AIRFLOW_UID` environment variable is set correctly to avoid permission issues. This is often set in the `.env` file or directly in the `docker-compose.yaml`.  The current value is located at `docker_all/AIRFLOW_UID`:
+            ```shell
+            if docker-compose exec airflow-webserver airflow users create \
+                --username "${AIRFLOW_ADMIN_USER}" \
+                --firstname "${AIRFLOW_ADMIN_FIRST}" \
+                --lastname "${AIRFLOW_ADMIN_LAST}" \
+                --role Admin \
+                --email "${AIRFLOW_ADMIN_EMAIL}" \
+                --password "${AIRFLOW_ADMIN_PASS}"; then
+                echo "Airflow admin user created successfully."
+            else
+                echo "Error creating Airflow admin user."
+                exit 1
+            fi
+            ```
+
+3.  **Start the services:**
 
     ```shell
     docker-compose up -d
     ```
 
-8.  **Access Airflow:**
+4.  **Access Airflow:**
 
     *   Open your web browser and navigate to `http://localhost:9091`.
     <img src="images/airflow.png" alt="Airflow Setup" width="1000"/>
 
-9. **Access Kafka UI:**
+5. **Access Kafka UI:**
 
     *   Open your web browser and navigate to `http://localhost:8080`.
     
     <img src="images/kafka_topic_debezium.png" alt="Kafka Setup" width="1000"/>
 
-10. **Access PostgreSQL:**
+6. **Access PostgreSQL:**
     <img src="images/postgre_sql.png" alt="Kafka Setup" width="1000"/>
 
-11. **Registers Debezium Connector**
+7. **Registers Debezium Connector**
     * Setup debezium config in `config/config_debezium.json`.
     * Run script `0_register_debezium.py` to register Debezium connector to capture changes in the data source and stores them in Kafka topics.
     * After running this script:
@@ -179,11 +185,11 @@ The source code is organized into several directories:
 
     <img src="images/kafka_debezium.png" alt="Kafka Setup" width="1000"/>
 
-12. **Generates user table (optional)**
+8. **Generates user table (optional)**
     * Run script `0_gen_user_table.py` to genetate user info and stores in MinIO bucket (`transaction-data-user`).
     <img src="images/gen_user_profile_minio.png" alt="Kafka Setup" width="1000"/>
 
-13. **Using Airflow to setup workflow**  
+9. **Using Airflow to setup workflow**  
     * The pipeline consists of two main steps:
         1. Transaction data generation and ingestion
         2. Feature calculation and aggregation
@@ -193,12 +199,12 @@ The source code is organized into several directories:
     * Create pool `transaction_data` in Airflow UI (optional)
     * Materialize features and write to an online store
 
-14. **Access MinIO:**
+10. **Access MinIO:**
     * Open your web browser and navigate to `http://localhost:9010`.
     *   Use the credentials defined in the `.env` file (`S3_ACCESS_KEY` and `S3_SECRET_KEY`).
     <img src="images/minio.png" alt="MinIO Setup" width="1000"/>
 
-15. **Access Trino:**
+11. **Access Trino:**
 
     *   Open your web browser and navigate to `http://localhost:8081`.
     * Using Trino to connect to MinIO
@@ -239,7 +245,7 @@ The source code is organized into several directories:
     
     * Additional SQL scripts can be found at **scripts/** 
 
-16. **Feature Store with Feast:**
+12. **Feature Store with Feast:**
     * In folder `feature_store`, there are 2 items: 
         * Folder `data` which contains online_store.db and registry.db
         * File config `feature_store.yaml` to create a Feature Store
