@@ -106,6 +106,10 @@ if __name__ == "__main__":
     customer_df = generate_user_data(num_rows=10000)
     print(customer_df.head())
     
-    insert_data_to_postgres(customer_df, table_name="customer_data")
-    print("Data inserted successfully.")
+    try:
+        insert_data_to_postgres(customer_df, table_name="customer_data")
+        print("Data inserted successfully.")
+    except Exception as e:
+        print(f"Data already exist {e}")
+        sys.exit(1)
 

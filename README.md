@@ -111,8 +111,8 @@ The source code is organized into several directories:
         *   Add volumes for some services
 
 2.  **Setup using `setup_project.sh`**:
-    * Open the terminal and run `chmod +x setup_airflow.sh` to make the script executable
-    * Open the terminal and run `bash ./setup_airflow.sh`
+    * Open the terminal and run `chmod +x setup_project.sh` to make the script executable
+    * Open the terminal and run `bash ./setup_project.sh`
     * This bash script includes these components:
 
         *  **Repository Cloning:**

@@ -43,7 +43,8 @@ if __name__ == "__main__":
 
     # Create Spark session configured for MinIO (S3A)
     spark = init_spark("FeastDeltaExample")
-
+    spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
+    
     cdc_events = spark.read \
         .format("kafka") \
         .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
@@ -138,8 +139,13 @@ if __name__ == "__main__":
     transaction_data.show(5)
 
     # Read streaming data from Kafka topic "cdc_transaction"
-    distinct_dates = transaction_data.select("date").distinct().count()
-    logger.info(f"Distinct dates in the data: {distinct_dates}")
+    try:
+        distinct_dates = transaction_data.filter(F.col("date").isNotNull()).select("date").distinct().count()
+        logger.info(f"Distinct non-null dates in the data: {distinct_dates}")
+    except Exception as e:
+        logger.error(f"Error counting distinct non-null dates: {e}", exc_info=True)
+        # Add more specific error handling or re-raise if needed
+        sys.exit(1)
     
     # Check if there are at least 7 distinct dates`
     if distinct_dates < 7:
@@ -178,10 +184,11 @@ if __name__ == "__main__":
     agg_fts.write \
         .format("delta") \
         .mode("overwrite") \
+        .partitionBy("date") \
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/features")
+        .save(f"s3a://{bucket}/features/")
         
     logger.info(f"Data written to MinIO bucket: {bucket}/features")
     logger.info("Feature calculation completed successfully.")
