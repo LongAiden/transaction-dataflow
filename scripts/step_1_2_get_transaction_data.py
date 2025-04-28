@@ -1,6 +1,6 @@
 import sys
 import os
-from .utils import init_spark, get_logger
+from utils import init_spark, get_logger
 import datetime as dt
 import pandas as pd
 import numpy as np
