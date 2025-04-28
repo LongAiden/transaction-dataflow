@@ -41,7 +41,7 @@ with DAG(
     calculate_fts = BashOperator(
         task_id='calculate_fts',
         bash_command=f'''
-        python /opt/airflow/external_scripts/2_calculate_features.py {current_date_str}
+        python /opt/airflow/external_scripts/step_2_calculate_features.py {current_date_str}
         '''
     )
 
@@ -49,7 +49,7 @@ with DAG(
     mateiralize_fts = BashOperator(
         task_id='mateiralize_fts',
         bash_command=f'''
-        python /opt/airflow/external_scripts/3_1_fs_register_table.py
+        python /opt/airflow/external_scripts/step_3_1_fs_register_table.py
         '''
     )
     
