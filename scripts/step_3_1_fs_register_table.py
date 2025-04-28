@@ -67,7 +67,7 @@ customer_features = FeatureView(
 )
 
 # --- Initialize Spark Session ---
-spark = init_spark("FeastDeltaExample")
+spark = init_spark("FeastDeltaExample", local_mode=False)
 fs = FeatureStore('/opt/airflow/feature_store')
 logger.info("FeatureStore object created.")
 

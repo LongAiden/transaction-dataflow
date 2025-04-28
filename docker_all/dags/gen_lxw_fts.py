@@ -46,11 +46,11 @@ with DAG(
     )
 
     # Materialize fts
-    mateiralize_fts = BashOperator(
-        task_id='mateiralize_fts',
+    materialize_fts = BashOperator(
+        task_id='materialize_fts',
         bash_command=f'''
         python /opt/airflow/external_scripts/step_3_1_fs_register_table.py
         '''
     )
     
-    start >> calculate_fts >> mateiralize_fts >> end
+    start >> calculate_fts >> materialize_fts >> end
