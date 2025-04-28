@@ -1,6 +1,6 @@
 import sys
 import os
-from .utils import init_spark, get_logger
+from scripts.utils import init_spark, get_logger
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -16,13 +16,13 @@ dotenv_path = os.path.join("/opt/airflow/external_scripts/", '.env')  # Assuming
 load_dotenv(dotenv_path)
 
 # Environment variables
-KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
-CDC_TRANSACTION_TOPIC = os.getenv("CDC_TRANSACTION_TOPIC")
 MINIO_ENDPOINT = os.getenv("S3_ENDPOINT")
 MINIO_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
 MINIO_BUCKET = os.getenv("MINIO_BUCKET")
-
+MINIO_BUCKET_RAW = os.getenv("MINIO_BUCKET_RAW")
+DATA_PATH = f"s3a://{MINIO_BUCKET_RAW}/daily/"
+FEATURES_PATH = f"s3a://{MINIO_BUCKET}/features/"
 RUN_DATE_STR = sys.argv[1]
 
 def main(RUN_DATE_STR=None):
@@ -43,111 +43,20 @@ def main(RUN_DATE_STR=None):
         sys.exit(1)
         
     logger.info(f"Starting feature calculation from {RUN_DATE_STR_7DAYS} to {RUN_DATE_STR}")
-
-    # Log the values using the logger
-    logger.info(f"Kafka Bootstrap Servers: {KAFKA_BOOTSTRAP_SERVERS}, CDC Transaction Topic: {CDC_TRANSACTION_TOPIC}")
     logger.info(f"MinIO Endpoint: {MINIO_ENDPOINT}, MinIO Bucket: {MINIO_BUCKET}")
 
     # Create Spark session configured for MinIO (S3A)
-    spark = init_spark("FeastDeltaExample")
+    spark = init_spark("FeastDeltaExample", local_mode=False)
     spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
-    
-    cdc_events = spark.read \
-        .format("kafka") \
-        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
-        .option("subscribe", CDC_TRANSACTION_TOPIC) \
-        .option("startingOffsets", "earliest") \
-        .load()
-
-    # Define the nested schema for transaction data fields
-    transaction_fields = [
-        T.StructField("id", T.IntegerType(), False),
-        T.StructField("User ID", T.StringType(), True),
-        T.StructField("Transaction ID", T.StringType(), True),
-        T.StructField("Amount", T.DoubleType(), True),
-        T.StructField("Vendor", T.StringType(), True),
-        T.StructField("Sources", T.StringType(), True),
-        T.StructField("Time", T.StringType(), True)
-    ]
-
-    # Define the nested schema for source
-    source_fields = [
-        T.StructField("version", T.StringType(), False),
-        T.StructField("connector", T.StringType(), False),
-        T.StructField("name", T.StringType(), False),
-        T.StructField("ts_ms", T.LongType(), False),
-        T.StructField("snapshot", T.StringType(), True),
-        T.StructField("db", T.StringType(), False),
-        T.StructField("sequence", T.StringType(), True),
-        T.StructField("schema", T.StringType(), False),
-        T.StructField("table", T.StringType(), False),
-        T.StructField("txId", T.LongType(), True),
-        T.StructField("lsn", T.LongType(), True),
-        T.StructField("xmin", T.LongType(), True)
-    ]
-
-    # Define the schema for transaction block
-    transaction_block_fields = [
-        T.StructField("id", T.StringType(), False),
-        T.StructField("total_order", T.LongType(), False),
-        T.StructField("data_collection_order", T.LongType(), False)
-    ]
-
-    # Complete CDC schema
-    cdc_schema = T.StructType([
-        T.StructField("schema", T.StructType([
-            T.StructField("type", T.StringType()),
-            T.StructField("fields", T.ArrayType(T.StringType())),
-            T.StructField("optional", T.BooleanType()),
-            T.StructField("name", T.StringType()),
-            T.StructField("version", T.IntegerType())
-        ])),
-        T.StructField("payload", T.StructType([
-            T.StructField("before", T.StructType(transaction_fields), True),
-            T.StructField("after", T.StructType(transaction_fields), True), 
-            T.StructField("source", T.StructType(source_fields), False),
-            T.StructField("op", T.StringType(), False),
-            T.StructField("ts_ms", T.LongType(), True),
-            T.StructField("transaction", T.StructType(transaction_block_fields), True)
-        ]))
-    ])
-
-    # Parse the JSON data
-    cdc_df = cdc_events \
-                .selectExpr("CAST(value AS STRING) as json_str") \
-                .withColumn("parsed_data", F.from_json(F.col("json_str"), cdc_schema)) \
-                .select("parsed_data.payload.*")
-
-    cdc_df.show(5)
-
-    # To get just the transaction data after the change
-    transaction_data_deleted = cdc_df.where('''op = 'd' ''').select('before.id')
-    transaction_data = cdc_df.where('''op in ('c','u','r')''').select(
-        "op", 
-        "after.id", 
-        "after.`User ID`", 
-        "after.`Transaction ID`", 
-        "after.Amount", 
-        "after.Vendor", 
-        "after.Sources", 
-        "after.Time",
-        "source.ts_ms"
-    )
-
-    w = Window.partitionBy("id").orderBy(F.col("ts_ms").desc())
-    transaction_data = transaction_data.withColumn("rank", F.row_number().over(w)) \
-                            .filter(F.col("rank") == 1) \
-                            .join(transaction_data_deleted, on=['id'], how="leftanti")\
-                            .withColumn("timestamp", F.to_timestamp(F.col("Time"), "yyyy-MM-dd HH:mm:ss")) \
-                            .withColumn("date", F.to_date(F.col("timestamp")))\
-                            .where(f'''date between "{RUN_DATE_STR_7DAYS}" and "{RUN_DATE_STR}"''')\
-                            .drop('timestamp', 'ts_ms','rank','id')
-
-    transaction_data.show(5)
+ 
+    transaction_data_daily = spark.read.format("delta").load(DATA_PATH)\
+                                .where(f'''date between "{RUN_DATE_STR_7DAYS}" and 
+                                                        "{RUN_DATE_STR}"''')
+        
 
     # Read streaming data from Kafka topic "cdc_transaction"
     try:
-        distinct_dates = transaction_data.filter(F.col("date").isNotNull()).select("date").distinct().count()
+        distinct_dates = transaction_data_daily.filter(F.col("date").isNotNull()).select("date").distinct().count()
         logger.info(f"Distinct non-null dates in the data: {distinct_dates}")
     except Exception as e:
         logger.error(f"Error counting distinct non-null dates: {e}", exc_info=True)
@@ -162,7 +71,7 @@ def main(RUN_DATE_STR=None):
                 
     # Calculate lxw features
     time_window = "l1w"
-    agg_fts = transaction_data.groupBy("User ID")\
+    agg_fts = transaction_data_daily.groupBy("User ID")\
                      .agg(F.count("Transaction ID").alias(f"num_transactions_{time_window}"),
                           F.sum("Amount").alias(f"total_amount_{time_window}"),
                           F.avg("Amount").alias(f"avg_amount_{time_window}"),
@@ -195,7 +104,7 @@ def main(RUN_DATE_STR=None):
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/features/")
+        .save(FEATURES_PATH)
         
     logger.info(f"Data written to MinIO bucket: {bucket}/features")
     logger.info("Feature calculation completed successfully.")
