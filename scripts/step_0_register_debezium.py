@@ -19,11 +19,11 @@ def get_connector_status():
     url = f'{KAFKA_CONNECT_URL}/connectors/{CONNECTOR_NAME}/status'
     try:
         response = requests.get(url)
-        response.raise_for_status() # Raise an exception for bad status codes
+        response.raise_for_status() 
         return response.json()
     except requests.exceptions.RequestException as e:
         print(f"Failed to get connector status: {e}")
-        return None # Return None or raise an exception, depending on desired handling
+        return None
 
 def check_connector_exists():
     try:
