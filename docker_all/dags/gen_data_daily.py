@@ -32,11 +32,18 @@ with DAG(
     end = DummyOperator(task_id="end")
     
     # Task to run the Python script
-    get_data_daily = BashOperator(
+    gen_data_daily = BashOperator(
         task_id='gen_data_daily',
         bash_command=f'''
-        python /opt/airflow/external_scripts/step_1_gen_transaction_data.py {current_date_str}
+        python /opt/airflow/external_scripts/step_1_1_gen_transaction_data.py {current_date_str}
+        '''
+    )
+    
+    get_data_daily = BashOperator(
+        task_id='get_data_daily',
+        bash_command=f'''
+        python /opt/airflow/external_scripts/step_1_2_gen_transaction_data.py {current_date_str}
         '''
     )
 
-    start >> get_data_daily >> end
+    start >> gen_data_daily >> get_data_daily >> end

@@ -21,7 +21,7 @@ CDC_TRANSACTION_TOPIC = os.getenv("CDC_TRANSACTION_TOPIC")
 MINIO_ENDPOINT = os.getenv("S3_ENDPOINT")
 MINIO_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 MINIO_SECRET_KEY = os.getenv("S3_SECRET_KEY")
-MINIO_BUCKET = os.getenv("MINIO_BUCKET")
+MINIO_BUCKET_RAW = os.getenv("MINIO_BUCKET_RAW")
 
 RUN_DATE_STR = sys.argv[1]
 
@@ -32,24 +32,14 @@ def main(RUN_DATE_STR=None):
     RUN_DATE_STR = sys.argv[1]
     RUN_DATE_STR_7DAYS = (dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d") - dt.timedelta(days=7)).strftime('%Y-%m-%d')
 
-    log_file = f"/opt/airflow/logs/2_calculate_fts/{RUN_DATE_STR}.log"
+    log_file = f"/opt/airflow/logs/1_get_transaction_data/{RUN_DATE_STR}.log"
     logger = get_logger(__name__, log_file)
-    
-    try:
-        RUN_DATE = dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d")
-        RUN_DATE_STR_7DAYS = (RUN_DATE - dt.timedelta(days=7)).strftime('%Y-%m-%d')
-    except ValueError:
-        logger.error(f"Error: Invalid date format for RUN_DATE_STR. Expected YYYY-MM-DD, got '{RUN_DATE_STR}'")
-        sys.exit(1)
-        
-    logger.info(f"Starting feature calculation from {RUN_DATE_STR_7DAYS} to {RUN_DATE_STR}")
-
-    # Log the values using the logger
+    logger.info(f"Starting get transaction data from a Kafka topic at {RUN_DATE_STR}")
     logger.info(f"Kafka Bootstrap Servers: {KAFKA_BOOTSTRAP_SERVERS}, CDC Transaction Topic: {CDC_TRANSACTION_TOPIC}")
-    logger.info(f"MinIO Endpoint: {MINIO_ENDPOINT}, MinIO Bucket: {MINIO_BUCKET}")
+    logger.info(f"MinIO Endpoint: {MINIO_ENDPOINT}, MinIO Bucket: {MINIO_BUCKET_RAW}")
 
     # Create Spark session configured for MinIO (S3A)
-    spark = init_spark("FeastDeltaExample")
+    spark = init_spark(f"get_transaction_data_{RUN_DATE_STR}", local_mode=False)
     spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
     
     cdc_events = spark.read \
@@ -122,7 +112,7 @@ def main(RUN_DATE_STR=None):
 
     # To get just the transaction data after the change
     transaction_data_deleted = cdc_df.where('''op = 'd' ''').select('before.id')
-    transaction_data = cdc_df.where('''op in ('c','u','r')''').select(
+    transaction_data_daily = cdc_df.where('''op in ('c','u','r')''').select(
         "op", 
         "after.id", 
         "after.`User ID`", 
@@ -135,45 +125,15 @@ def main(RUN_DATE_STR=None):
     )
 
     w = Window.partitionBy("id").orderBy(F.col("ts_ms").desc())
-    transaction_data = transaction_data.withColumn("rank", F.row_number().over(w)) \
+    transaction_data_daily = transaction_data_daily.withColumn("rank", F.row_number().over(w)) \
                             .filter(F.col("rank") == 1) \
                             .join(transaction_data_deleted, on=['id'], how="leftanti")\
                             .withColumn("timestamp", F.to_timestamp(F.col("Time"), "yyyy-MM-dd HH:mm:ss")) \
                             .withColumn("date", F.to_date(F.col("timestamp")))\
-                            .where(f'''date between "{RUN_DATE_STR_7DAYS}" and "{RUN_DATE_STR}"''')\
+                            .where(f'''date in ("{RUN_DATE_STR}")''')\
                             .drop('timestamp', 'ts_ms','rank','id')
 
-    transaction_data.show(5)
-
-    # Read streaming data from Kafka topic "cdc_transaction"
-    try:
-        distinct_dates = transaction_data.filter(F.col("date").isNotNull()).select("date").distinct().count()
-        logger.info(f"Distinct non-null dates in the data: {distinct_dates}")
-    except Exception as e:
-        logger.error(f"Error counting distinct non-null dates: {e}", exc_info=True)
-        # Add more specific error handling or re-raise if needed
-        sys.exit(1)
-    
-    # Check if there are at least 7 distinct dates`
-    if distinct_dates < 7:
-        # Log the values using the logger
-        logger.error(f"Error: Found only {distinct_dates} distinct dates in the data. Minimum required is 7 days.")
-        sys.exit(1)
-                
-    # Calculate lxw features
-    time_window = "l1w"
-    agg_fts = transaction_data.groupBy("User ID")\
-                     .agg(F.count("Transaction ID").alias(f"num_transactions_{time_window}"),
-                          F.sum("Amount").alias(f"total_amount_{time_window}"),
-                          F.avg("Amount").alias(f"avg_amount_{time_window}"),
-                          F.min("Amount").alias(f"min_amount_{time_window}"),
-                          F.max("Amount").alias(f"max_amount_{time_window}"),
-                          F.countDistinct("Vendor").alias(f"num_vendors_{time_window}"),
-                          F.countDistinct("Sources").alias(f"num_sources_{time_window}"))\
-                        .withColumnRenamed("User ID", "user_id")\
-                        .withColumn("date", F.lit(RUN_DATE_STR))
-    
-    agg_fts.show(5)
+    transaction_data_daily.show(5)
 
     # Initialize MinIO client
     minio_client = Minio(
@@ -184,21 +144,21 @@ def main(RUN_DATE_STR=None):
     )
 
     # Create bucket if it doesn't exist
-    bucket = MINIO_BUCKET
+    bucket = MINIO_BUCKET_RAW
     if not minio_client.bucket_exists(bucket):
         minio_client.make_bucket(bucket)
 
-    agg_fts.write \
+    transaction_data_daily.write \
         .format("delta") \
         .mode("overwrite") \
         .partitionBy("date") \
         .option("delta.columnMapping.mode", "name") \
         .option("delta.minReaderVersion", "2") \
         .option("delta.minWriterVersion", "5") \
-        .save(f"s3a://{bucket}/features/")
+        .save(f"s3a://{bucket}/daily/")
         
     logger.info(f"Data written to MinIO bucket: {bucket}/features")
-    logger.info("Feature calculation completed successfully.")
+    logger.info("Get transaction data completed successfully.")
 
 if __name__ == "__main__":
     main()

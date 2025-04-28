@@ -2,8 +2,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
 import requests
-import scripts.register_debezium as register_debezium
-from scripts.register_debezium import KAFKA_CONNECT_URL, CONNECTOR_NAME
+import scripts.step_0_register_debezium as register_debezium
+from scripts.step_0_register_debezium import KAFKA_CONNECT_URL, CONNECTOR_NAME
 import os
 import json
 

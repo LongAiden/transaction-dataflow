@@ -1,0 +1,174 @@
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0
+rootdir: /home/longnv95/Coding/MLOPs/final_project
+plugins: anyio-4.5.2, mock-3.14.0, typeguard-4.4.0
+collected 5 items
+
+tests/test_step_2_calculate_fts.py F.FF.                                 [100%]
+
+=================================== FAILURES ===================================
+___ TestCalculateFeatures.test_calculate_features_count_distinct_dates_error ___
+
+self = <test_step_2_calculate_fts.TestCalculateFeatures testMethod=test_calculate_features_count_distinct_dates_error>
+mock_load_dotenv = <MagicMock name='load_dotenv' id='123470115930368'>
+
+    @patch('scripts.step_2_calculate_features.load_dotenv')
+    def test_calculate_features_count_distinct_dates_error(self, mock_load_dotenv):
+        """Test when there's an error when counting distinct dates."""
+        mock_load_dotenv.return_value = None
+    
+        # Mock Kafka data
+        mock_kafka_df = MagicMock()
+        self.mock_spark.read.format.return_value.option.return_value.load.return_value = mock_kafka_df
+    
+        # Mock parsed CDC data
+        mock_cdc_df = MagicMock()
+        mock_kafka_df.selectExpr.return_value.withColumn.return_value.select.return_value = mock_cdc_df
+    
+        # Mock transaction data
+        mock_transaction_data = MagicMock()
+        mock_cdc_df.where.return_value.select.return_value = mock_transaction_data
+    
+        # Mock Window and aggregations
+        mock_transaction_data.withColumn.return_value.filter.return_value.join.return_value.withColumn.return_value.withColumn.return_value.where.return_value.drop.return_value = mock_transaction_data
+        mock_transaction_data.groupBy.return_value.agg.return_value.withColumnRenamed.return_value.withColumn.return_value = mock_transaction_data
+    
+        # Mock the count function to raise an exception
+        mock_transaction_data.filter.return_value.select.return_value.distinct.return_value.count.side_effect = Exception("Error counting distinct dates")
+    
+        # Expect a SystemExit exception
+        with self.assertRaises(SystemExit) as context:
+>           calculate_features.main()
+
+tests/test_step_2_calculate_fts.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/step_2_calculate_features.py:122: in main
+    .withColumn("parsed_data", F.from_json(F.col("json_str"), cdc_schema)) \
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/utils.py:160: in wrapped
+    return f(*args, **kwargs)
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:221: in col
+    return _invoke_function("col", col)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _invoke_function(name: str, *args: Any) -> Column:
+        """
+        Invokes JVM function identified by name with args
+        and wraps the result with :class:`~pyspark.sql.Column`.
+        """
+>       assert SparkContext._active_spark_context is not None
+E       AssertionError
+
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:93: AssertionError
+________ TestCalculateFeatures.test_calculate_features_not_enough_dates ________
+
+self = <test_step_2_calculate_fts.TestCalculateFeatures testMethod=test_calculate_features_not_enough_dates>
+mock_load_dotenv = <MagicMock name='load_dotenv' id='123470114974064'>
+
+    @patch('scripts.step_2_calculate_features.load_dotenv')
+    def test_calculate_features_not_enough_dates(self, mock_load_dotenv):
+        """Test when not enough distinct dates are found in the data."""
+        mock_load_dotenv.return_value = None
+    
+        # Mock Kafka data
+        mock_kafka_df = MagicMock()
+        self.mock_spark.read.format.return_value.option.return_value.load.return_value = mock_kafka_df
+    
+        # Mock parsed CDC data
+        mock_cdc_df = MagicMock()
+        mock_kafka_df.selectExpr.return_value.withColumn.return_value.select.return_value = mock_cdc_df
+    
+        # Mock transaction data
+        mock_transaction_data = MagicMock()
+        mock_cdc_df.where.return_value.select.return_value = mock_transaction_data
+    
+        # Mock Window and aggregations
+        mock_transaction_data.withColumn.return_value.filter.return_value.join.return_value.withColumn.return_value.withColumn.return_value.where.return_value.drop.return_value = mock_transaction_data
+        mock_transaction_data.groupBy.return_value.agg.return_value.withColumnRenamed.return_value.withColumn.return_value = mock_transaction_data
+    
+        # Mock distinct dates count (less than 7)
+        mock_transaction_data.filter.return_value.select.return_value.distinct.return_value.count.return_value = 3
+    
+        # Expect a SystemExit exception
+        with self.assertRaises(SystemExit) as context:
+>           calculate_features.main()
+
+tests/test_step_2_calculate_fts.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/step_2_calculate_features.py:122: in main
+    .withColumn("parsed_data", F.from_json(F.col("json_str"), cdc_schema)) \
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/utils.py:160: in wrapped
+    return f(*args, **kwargs)
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:221: in col
+    return _invoke_function("col", col)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _invoke_function(name: str, *args: Any) -> Column:
+        """
+        Invokes JVM function identified by name with args
+        and wraps the result with :class:`~pyspark.sql.Column`.
+        """
+>       assert SparkContext._active_spark_context is not None
+E       AssertionError
+
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:93: AssertionError
+____________ TestCalculateFeatures.test_calculate_features_success _____________
+
+self = <test_step_2_calculate_fts.TestCalculateFeatures testMethod=test_calculate_features_success>
+mock_load_dotenv = <MagicMock name='load_dotenv' id='123470041329824'>
+
+    @patch('scripts.step_2_calculate_features.load_dotenv')
+    def test_calculate_features_success(self, mock_load_dotenv):
+        """Test the happy path for calculate_features."""
+        mock_load_dotenv.return_value = None
+    
+        # Mock Kafka data
+        mock_kafka_df = MagicMock()
+        self.mock_spark.read.format.return_value.option.return_value.load.return_value = mock_kafka_df
+    
+        # Mock parsed CDC data
+        mock_cdc_df = MagicMock()
+        mock_kafka_df.selectExpr.return_value.withColumn.return_value.select.return_value = mock_cdc_df
+    
+        # Mock transaction data
+        mock_transaction_data = MagicMock()
+        mock_cdc_df.where.return_value.select.return_value = mock_transaction_data
+    
+        # Mock Window and aggregations
+        mock_window = MagicMock()
+        mock_transaction_data.withColumn.return_value.filter.return_value.join.return_value.withColumn.return_value.withColumn.return_value.where.return_value.drop.return_value = mock_transaction_data
+        mock_transaction_data.groupBy.return_value.agg.return_value.withColumnRenamed.return_value.withColumn.return_value = mock_transaction_data
+        mock_transaction_data.filter.return_value.select.return_value.distinct.return_value.count.return_value = 10
+    
+        # Mock MinIO bucket existence and writing data
+        self.mock_minio_client.bucket_exists.return_value = False
+        mock_transaction_data.write.format.return_value.mode.return_value.partitionBy.return_value.option.return_value.option.return_value.save.return_value = None
+    
+        # Execute the script
+>       calculate_features.main()
+
+tests/test_step_2_calculate_fts.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/step_2_calculate_features.py:122: in main
+    .withColumn("parsed_data", F.from_json(F.col("json_str"), cdc_schema)) \
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/utils.py:160: in wrapped
+    return f(*args, **kwargs)
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:221: in col
+    return _invoke_function("col", col)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'col', args = ('json_str',)
+
+    def _invoke_function(name: str, *args: Any) -> Column:
+        """
+        Invokes JVM function identified by name with args
+        and wraps the result with :class:`~pyspark.sql.Column`.
+        """
+>       assert SparkContext._active_spark_context is not None
+E       AssertionError
+
+../../../Applications/extracts/Miniconda3-py38_4.8.3/envs/ame/lib/python3.8/site-packages/pyspark/sql/functions.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_step_2_calculate_fts.py::TestCalculateFeatures::test_calculate_features_count_distinct_dates_error
+FAILED tests/test_step_2_calculate_fts.py::TestCalculateFeatures::test_calculate_features_not_enough_dates
+FAILED tests/test_step_2_calculate_fts.py::TestCalculateFeatures::test_calculate_features_success
+========================= 3 failed, 2 passed in 0.82s ==========================

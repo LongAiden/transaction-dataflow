@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from pyspark.sql import SparkSession
 
 # Create a spark session with Delta Lake and S3A support
-def init_spark(spark_app_name:str, local_mode:bool=False) -> SparkSession:
+def init_spark(spark_app_name:str, local_mode:bool=True) -> SparkSession:
     """
     This function initializes a Spark session with Delta Lake and S3A support.
     It also configures the session to use local mode and sets the timezone to UTC.
