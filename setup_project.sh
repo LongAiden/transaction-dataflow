@@ -58,9 +58,9 @@ cd .. # Back to the parent directory
 sleep 20
 
 echo "7. Create user table in PostgreSQL..."
-python ./scripts/0_gen_user_table.py
+python ./scripts/step_0_gen_user_table.py
 
 echo "8. Register Debezium to Kafka topic..."
-python ./scripts/0_register_debezium.py
+python ./scripts/step_0_register_debezium.py
 
 echo "Setup complete!"

@@ -42,7 +42,7 @@ with DAG(
     get_data_daily = BashOperator(
         task_id='get_data_daily',
         bash_command=f'''
-        python /opt/airflow/external_scripts/step_1_2_gen_transaction_data.py {current_date_str}
+        python /opt/airflow/external_scripts/step_1_2_get_transaction_data.py {current_date_str}
         '''
     )
 
