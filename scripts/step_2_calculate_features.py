@@ -5,7 +5,7 @@ import datetime as dt
 import pandas as pd
 import numpy as np
 from pyspark.sql.window import Window
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql import types as T
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType
@@ -24,6 +24,27 @@ MINIO_BUCKET_RAW = os.getenv("MINIO_BUCKET_RAW")
 DATA_PATH = f"s3a://{MINIO_BUCKET_RAW}/daily/"
 FEATURES_PATH = f"s3a://{MINIO_BUCKET}/features/"
 RUN_DATE_STR = sys.argv[1]
+
+def calculate_lxw_fts(df: DataFrame, time_window: str) -> DataFrame:
+    """
+    Calculate the features for a given time window.
+    :df: DataFrame containing the transaction data
+    :time_window: The time window to calculate the features for (e.g. '7D')
+    :return: DataFrame containing the calculated features
+    """
+
+    agg_fts = df.groupBy("User ID")\
+                     .agg(F.count("Transaction ID").alias(f"num_transactions_{time_window}"),
+                          F.sum("Amount").alias(f"total_amount_{time_window}"),
+                          F.avg("Amount").alias(f"avg_amount_{time_window}"),
+                          F.min("Amount").alias(f"min_amount_{time_window}"),
+                          F.max("Amount").alias(f"max_amount_{time_window}"),
+                          F.countDistinct("Vendor").alias(f"num_vendors_{time_window}"),
+                          F.countDistinct("Sources").alias(f"num_sources_{time_window}"))\
+                        .withColumnRenamed("User ID", "user_id")\
+                        .withColumn("date", F.lit(RUN_DATE_STR))
+
+    return agg_fts
 
 def main(RUN_DATE_STR=None):
     if RUN_DATE_STR is None:
@@ -71,17 +92,7 @@ def main(RUN_DATE_STR=None):
                 
     # Calculate lxw features
     time_window = "l1w"
-    agg_fts = transaction_data_daily.groupBy("User ID")\
-                     .agg(F.count("Transaction ID").alias(f"num_transactions_{time_window}"),
-                          F.sum("Amount").alias(f"total_amount_{time_window}"),
-                          F.avg("Amount").alias(f"avg_amount_{time_window}"),
-                          F.min("Amount").alias(f"min_amount_{time_window}"),
-                          F.max("Amount").alias(f"max_amount_{time_window}"),
-                          F.countDistinct("Vendor").alias(f"num_vendors_{time_window}"),
-                          F.countDistinct("Sources").alias(f"num_sources_{time_window}"))\
-                        .withColumnRenamed("User ID", "user_id")\
-                        .withColumn("date", F.lit(RUN_DATE_STR))
-    
+    agg_fts = calculate_lxw_fts(transaction_data_daily, time_window=time_window)
     agg_fts.show(5)
 
     # Initialize MinIO client
