@@ -1,6 +1,6 @@
 import sys
 import os
-from utils import init_spark, get_logger
+from scripts.utils import init_spark, get_logger
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -51,16 +51,23 @@ def main(RUN_DATE_STR=None):
         RUN_DATE_STR = RUN_DATE_STR
     
     RUN_DATE_STR = sys.argv[1]
-    RUN_DATE_STR_7DAYS = (dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d") - dt.timedelta(days=7)).strftime('%Y-%m-%d')
 
     log_file = f"/opt/airflow/logs/2_calculate_fts/{RUN_DATE_STR}.log"
     logger = get_logger(__name__, log_file)
     
+    if RUN_DATE_STR is None:
+        if len(sys.argv) < 2:
+            logger.error("Usage: python script.py <YYYY-MM-DD>")
+            sys.exit(1)
+        RUN_DATE_STR = sys.argv[1]
+
+    # Validate date format before proceeding
     try:
-        RUN_DATE = dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d")
-        RUN_DATE_STR_7DAYS = (RUN_DATE - dt.timedelta(days=7)).strftime('%Y-%m-%d')
+        RUN_DATE_STR_7DAYS = (dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d") - dt.timedelta(days=7)).strftime('%Y-%m-%d')
+        RUN_DATE_STR = dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d").strftime('%Y-%m-%d') # Assuming you need the main date string too
     except ValueError:
-        logger.error(f"Error: Invalid date format for RUN_DATE_STR. Expected YYYY-MM-DD, got '{RUN_DATE_STR}'")
+        # If strptime fails, the format is invalid
+        logger.error(f"Invalid date format: {RUN_DATE_STR}. Please use YYYY-MM-DD format.")
         sys.exit(1)
         
     logger.info(f"Starting feature calculation from {RUN_DATE_STR_7DAYS} to {RUN_DATE_STR}")
