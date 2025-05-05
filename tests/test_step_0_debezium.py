@@ -13,13 +13,8 @@ if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 LOG_FILE = os.path.join(LOG_DIR, 'test_step_0_debezium.log')
 
-log_file = f"/opt/airflow/logs/1_get_transaction_data/{RUN_DATE_STR}.log"
-logger = get_logger(__name__, log_file)
+logger = get_logger(__name__, LOG_FILE) # Get the logger from utils
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-CONFIG_PATH = os.path.join(PROJECT_ROOT, 'docker_all', 'config', 'config_debezium.json')
-CONFIG_PATH_TMP = os.path.join(PROJECT_ROOT, 'docker_all', 'config', 'temp_config_debezium.json')
 
 @pytest.fixture(autouse=True)
 def setup_and_teardown():
@@ -28,7 +23,7 @@ def setup_and_teardown():
     logger.info("Finished the test case")
 
 
-def test_check_connector_exists_success(caplog, monkeypatch):
+def test_check_connector_exists_success(monkeypatch):  # Removed caplog
     """Test when the connector exists (status code 200)."""
     logger.info("Testing check_connector_exists_success")
     mock_response = MagicMock()
@@ -38,7 +33,7 @@ def test_check_connector_exists_success(caplog, monkeypatch):
     logger.info("check_connector_exists_success passed")
 
 
-def test_check_connector_exists_failure(caplog, monkeypatch):
+def test_check_connector_exists_failure(monkeypatch):  # Removed caplog
     """Test when the connector doesn't exist (status code not 200)."""
     logger.info("Testing check_connector_exists_failure")
     mock_response = MagicMock()
@@ -48,7 +43,7 @@ def test_check_connector_exists_failure(caplog, monkeypatch):
     logger.info("check_connector_exists_failure passed")
 
 
-def test_check_connector_exists_exception(caplog, monkeypatch):
+def test_check_connector_exists_exception(monkeypatch):  # Removed caplog
     """Test when requests.get raises an exception."""
     logger.info("Testing check_connector_exists_exception")
     monkeypatch.setattr('scripts.step_0_register_debezium.requests.get', MagicMock(side_effect=requests.exceptions.RequestException("Connection error")))
@@ -56,7 +51,7 @@ def test_check_connector_exists_exception(caplog, monkeypatch):
     logger.info("check_connector_exists_exception passed")
 
 
-def test_check_kafka_connect_health_success(caplog, monkeypatch):
+def test_check_kafka_connect_health_success(monkeypatch):  # Removed caplog
     """Test when Kafka Connect is healthy (status code 200)."""
     logger.info("Testing check_kafka_connect_health_success")
     mock_response = MagicMock()
@@ -66,7 +61,7 @@ def test_check_kafka_connect_health_success(caplog, monkeypatch):
     logger.info("check_kafka_connect_health_success passed")
 
 
-def test_check_kafka_connect_health_failure(caplog, monkeypatch):
+def test_check_kafka_connect_health_failure(monkeypatch):  # Removed caplog
     """Test when Kafka Connect is unhealthy (status code not 200)."""
     logger.info("Testing check_kafka_connect_health_failure")
     mock_response = MagicMock()
@@ -76,7 +71,7 @@ def test_check_kafka_connect_health_failure(caplog, monkeypatch):
     logger.info("check_kafka_connect_health_failure passed")
 
 
-def test_check_kafka_connect_health_exception(caplog, monkeypatch):
+def test_check_kafka_connect_health_exception(monkeypatch):  # Removed caplog
     """Test when requests.get raises an exception."""
     logger.info("Testing check_kafka_connect_health_exception")
     monkeypatch.setattr('scripts.step_0_register_debezium.requests.get', MagicMock(side_effect=requests.exceptions.RequestException("Connection error")))
@@ -84,7 +79,7 @@ def test_check_kafka_connect_health_exception(caplog, monkeypatch):
     logger.info("check_kafka_connect_health_exception passed")
 
 
-def test_register_connector_already_exists(caplog, monkeypatch):
+def test_register_connector_already_exists(monkeypatch):  # Removed caplog
     """Test when the connector is already registered."""
     logger.info("Testing register_connector_already_exists")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=True))
@@ -97,7 +92,7 @@ def test_register_connector_already_exists(caplog, monkeypatch):
     logger.info("register_connector_already_exists passed")
 
 
-def test_register_connector_success(caplog, monkeypatch):
+def test_register_connector_success(monkeypatch):  # Removed caplog
     """Test successful registration of the connector."""
     logger.info("Testing register_connector_success")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=False))
@@ -110,18 +105,18 @@ def test_register_connector_success(caplog, monkeypatch):
     monkeypatch.setattr('scripts.step_0_register_debezium.requests.get', MagicMock(return_value=mock_get_response))
     # Create a temporary config file
     config_data = {"name": "postgres-connector", "config": {"connector.class": "io.debezium.connector.postgresql.PostgresConnector"}}
-    with open(CONFIG_PATH, 'w') as f:
+    with open(CONFIG_PATH_TMP, 'w') as f:
         json.dump(config_data, f)
     try:
         register_debezium.register_connector()
     except Exception as e:
         assert False, f"register_connector raised an exception: {e}"
     # Clean up the temporary config file
-    os.remove(CONFIG_PATH)
+    os.remove(CONFIG_PATH_TMP)
     logger.info("register_connector_success passed")
 
 
-def test_register_connector_failure(caplog, monkeypatch):
+def test_register_connector_failure(monkeypatch):  # Removed caplog
     """Test failed registration of the connector."""
     logger.info("Testing register_connector_failure")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=False))
@@ -132,18 +127,18 @@ def test_register_connector_failure(caplog, monkeypatch):
     monkeypatch.setattr('scripts.step_0_register_debezium.requests.post', MagicMock(return_value=mock_post_response))
     # Create a temporary config file
     config_data = {"name": "postgres-connector", "config": {"connector.class": "io.debezium.connector.postgresql.PostgresConnector"}}
-    with open(CONFIG_PATH, 'w') as f:
+    with open(CONFIG_PATH_TMP, 'w') as f:
         json.dump(config_data, f)
     try:
         register_debezium.register_connector()
     except Exception:
         pass
     # Clean up the temporary config file
-    os.remove(CONFIG_PATH)
+    os.remove(CONFIG_PATH_TMP)
     logger.info("register_connector_failure passed")
 
 
-def test_register_connector_connection_error(caplog, monkeypatch):
+def test_register_connector_connection_error(monkeypatch):  # Removed caplog
     """Test connection error during registration."""
     logger.info("Testing register_connector_connection_error")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=False))
@@ -151,16 +146,16 @@ def test_register_connector_connection_error(caplog, monkeypatch):
     monkeypatch.setattr('scripts.step_0_register_debezium.requests.post', MagicMock(side_effect=requests.exceptions.ConnectionError("Connection refused")))
     # Create a temporary config file
     config_data = {"name": "postgres-connector", "config": {"connector.class": "io.debezium.connector.postgresql.PostgresConnector"}}
-    with open(CONFIG_PATH, 'w') as f:
+    with open(CONFIG_PATH_TMP, 'w') as f:
         json.dump(config_data, f)
     with pytest.raises(requests.exceptions.ConnectionError):
         register_debezium.register_connector()
     # Clean up the temporary config file
-    os.remove(CONFIG_PATH)
+    os.remove(CONFIG_PATH_TMP)
     logger.info("register_connector_connection_error passed")
 
 
-def test_register_connector_kafka_not_ready(caplog, monkeypatch):
+def test_register_connector_kafka_not_ready(monkeypatch):  # Removed caplog
     """Test when Kafka Connect is not ready after waiting."""
     logger.info("Testing register_connector_kafka_not_ready")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=False))
@@ -170,7 +165,7 @@ def test_register_connector_kafka_not_ready(caplog, monkeypatch):
     logger.info("register_connector_kafka_not_ready passed")
 
 
-def test_register_connector_config_file_not_found(caplog, monkeypatch):
+def test_register_connector_config_file_not_found(monkeypatch, caplog):
     """Test when the config file is not found."""
     logger.info("Testing register_connector_config_file_not_found")
     monkeypatch.setattr('scripts.step_0_register_debezium.check_connector_exists', MagicMock(return_value=False))
