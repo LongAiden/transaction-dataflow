@@ -62,8 +62,8 @@ The data processing flow consists of multiple layers:
             StructField("Time", StringType(), True)
             ])
     ```
-* Transaction Data: Generated daily via `1_gen_transaction_data.py` and stored in PostgreSQL
-* Customer Data: Generated once via `0_gen_user_table.py` and stored in MinIO as Parquet format
+* Transaction Data: Generated daily via `step_1_gen_transaction_data.py` and stored in PostgreSQL
+* Customer Data: Generated once via `step_0_gen_user_table.py` and stored in MinIO as Parquet format
 
 ## Quickstart
 
@@ -82,16 +82,17 @@ The source code is organized into several directories:
 *   **`dags/`**: Contains Airflow DAGs for orchestrating the data pipeline.
     *   `gen_data_daily.py`: DAG for generating daily transaction data and ingesting it into Kafka. Located at `docker_all/dags/gen_data_daily.py`
     *   `gen_lxw_fts.py`: DAG for calculating weekly features using Spark. Located at `docker_all/dags/gen_lxw_fts.py`
-*   **`external_scripts/`**: Contains Python scripts executed by Airflow tasks.
-    *   `0_gen_user_table.py`: Generates customer demographic data and stores in MinIO as Parquet format
-    *   `0_register_debezium.py`: Registers Debezium connector to capture PostgreSQL changes
-    *   `1_gen_transaction_data.py`: Generates daily transaction data and stores in PostgreSQL
-    *   `2_calculate_features.py`: Reads CDC events from Kafka, calculates user features using Spark, and stores results in MinIO
-*   **`scripts/`**: Contains utility scripts.
-    *   `0_gen_user_table.py`: Generates user data and stores it in MinIO. Located at `scripts/0_gen_user_table.py`
+*   **`external_scripts/` or `scripts/`**: Contains Python scripts executed by Airflow tasks.
+    *   `step_0_gen_user_table.py`: Generates customer demographic data and stores in MinIO as Parquet format
+    *   `step_0_register_debezium.py`: Registers Debezium connector to capture PostgreSQL changes
+    *   `step_1_1_gen_transaction_data.py`: Generates daily transaction data and stores in PostgreSQL. In Production, data can be generated through other sources
+    *   `step_1_2_get_transaction_data.py`: Generates daily transaction data and stores in PostgreSQL. In Production, data can be generated through other sources
+    *   `step_2_calculate_features.py`: Reads CDC events from Kafka, calculates user features using Spark, and stores results in MinIO
+    *   `step_3_1_fs_register_table.py`: Register features and materialize features to a 
     *   `.env`: Contains environment variables for the scripts. Located at `/scripts/.env`
 *   **`trino/`**: Contains configuration files for Trino.
     *   `catalog/lakehouse.properties`: Defines the connection to the Hive Metastore and MinIO for querying Delta Lake tables. Located at `docker_all/trino/catalog/lakehouse.properties`
+*   **`tests/`**: Contains tests and log for testing
 
 ### Instructions
 0.  **Prerequisites:**
@@ -179,14 +180,14 @@ The source code is organized into several directories:
 
 7. **Registers Debezium Connector**
     * Setup debezium config in `config/config_debezium.json`.
-    * Run script `0_register_debezium.py` to register Debezium connector to capture changes in the data source and stores them in Kafka topics.
+    * Run script `step_0_register_debezium.py` to register Debezium connector to capture changes in the data source and stores them in Kafka topics.
     * After running this script:
     <img src="images/register_debezium.png" alt="Kafka Setup" width="1000"/>
 
     <img src="images/kafka_debezium.png" alt="Kafka Setup" width="1000"/>
 
 8. **Generates user table (optional)**
-    * Run script `0_gen_user_table.py` to genetate user info and stores in MinIO bucket (`transaction-data-user`).
+    * Run script `step_0_gen_user_table.py` to genetate user info and stores in MinIO bucket (`transaction-data-user`).
     <img src="images/gen_user_profile_minio.png" alt="Kafka Setup" width="1000"/>
 
 9. **Using Airflow to setup workflow**  
