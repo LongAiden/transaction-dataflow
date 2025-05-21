@@ -1,6 +1,6 @@
 import sys
 import os
-from utils import init_spark, get_logger
+from scripts.utils import init_spark, get_logger
 import datetime as dt
 import pandas as pd
 import numpy as np
@@ -30,7 +30,6 @@ def main(RUN_DATE_STR=None):
         RUN_DATE_STR = RUN_DATE_STR
     
     RUN_DATE_STR = sys.argv[1]
-    RUN_DATE_STR_7DAYS = (dt.datetime.strptime(RUN_DATE_STR, "%Y-%m-%d") - dt.timedelta(days=7)).strftime('%Y-%m-%d')
 
     log_file = f"/opt/airflow/logs/1_get_transaction_data/{RUN_DATE_STR}.log"
     logger = get_logger(__name__, log_file)
