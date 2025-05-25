@@ -245,7 +245,7 @@ services:
   metastore_db:
     mem_limit: 256m
     container_name: datalake-metastore-db
-    image: postgres:11
+    image: postgres:13
     hostname: metastore_db
     ports:
       - "5433:5432"
