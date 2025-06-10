@@ -22,6 +22,7 @@ MINIO_BUCKET_RAW = os.getenv("MINIO_BUCKET_RAW")
 DATA_PATH = f"s3a://{MINIO_BUCKET_RAW}/daily/"
 FEATURES_PATH = f"s3a://{MINIO_BUCKET}/features/"
 
+# Logging setup
 LOG_DIR = os.path.join(os.path.dirname(__file__), 'logs')
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
