@@ -1,0 +1,48 @@
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:33 Testing check_connector_exists_success
+INFO     root:test_step_0_debezium.py:38 check_connector_exists_success passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:43 Testing check_connector_exists_failure
+INFO     root:test_step_0_debezium.py:48 check_connector_exists_failure passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:53 Testing check_connector_exists_exception
+INFO     root:test_step_0_debezium.py:56 check_connector_exists_exception passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:61 Testing check_kafka_connect_health_success
+INFO     root:test_step_0_debezium.py:66 check_kafka_connect_health_success passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:71 Testing check_kafka_connect_health_failure
+INFO     root:test_step_0_debezium.py:76 check_kafka_connect_health_failure passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:81 Testing check_kafka_connect_health_exception
+INFO     root:test_step_0_debezium.py:84 check_kafka_connect_health_exception passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:89 Testing register_connector_already_exists
+INFO     root:test_step_0_debezium.py:97 register_connector_already_exists passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:102 Testing register_connector_success
+INFO     root:test_step_0_debezium.py:121 register_connector_success passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:126 Testing register_connector_failure
+INFO     root:test_step_0_debezium.py:143 register_connector_failure passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:148 Testing register_connector_connection_error
+INFO     root:test_step_0_debezium.py:160 register_connector_connection_error passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:165 Testing register_connector_kafka_not_ready
+INFO     root:test_step_0_debezium.py:170 register_connector_kafka_not_ready passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case
+INFO     root:test_step_0_debezium.py:26 Starting a new test case
+INFO     root:test_step_0_debezium.py:175 Testing register_connector_config_file_not_found
+INFO     root:test_step_0_debezium.py:192 register_connector_config_file_not_found passed
+INFO     root:test_step_0_debezium.py:28 Finished the test case

@@ -1,0 +1,40 @@
+# feature_store.yaml
+project: feature_store_demo
+registry: data/registry.db
+provider: local
+offline_store:
+    type: spark
+    spark_conf:
+        # Basic Spark Configs
+        spark.master: "local[*]"
+        spark.ui.enabled: "false" # Keep UI off for local runs unless needed
+        spark.eventLog.enabled: "false"
+        spark.sql.session.timeZone: "UTC"
+
+        # Delta Lake Configurations
+        spark.jars.packages: "io.delta:delta-core_2.12:2.4.0,org.apache.hadoop:hadoop-aws:3.3.1" # Adjust versions if needed
+        spark.sql.extensions: "io.delta.sql.DeltaSparkSessionExtension"
+        spark.sql.catalog.spark_catalog: "org.apache.spark.sql.delta.catalog.DeltaCatalog"
+
+        spark.hadoop.fs.s3a.access.key: ${S3_ACCESS_KEY}
+        spark.hadoop.fs.s3a.secret.key: ${S3_SECRET_KEY}
+        spark.hadoop.fs.s3a.endpoint: ${S3_ENDPOINT_LOCAL}
+        spark.hadoop.fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
+        spark.hadoop.fs.s3a.path.style.access: "true" # Usually required for MinIO
+        spark.hadoop.fs.s3a.connection.ssl.enabled: "false" # Set to true if MinIO uses HTTPS
+
+        # Arrow Configuration (Optional but recommended for performance)
+        spark.sql.execution.arrow.pyspark.enabled: "true"
+        spark.sql.execution.arrow.fallback.enabled: "true" # Allow fallback if Arrow conversion fails
+
+        # Potentially useful for schema inference with special characters
+        spark.sql.parser.quotedRegexColumnNames: "true"
+        spark.sql.execution.arrow.pyspark.enabled: "true"
+        spark.sql.execution.arrow.fallback.enabled: "true"
+        spark.hadoop.fs.s3a.connection.maximum: "100"
+        spark.hadoop.fs.s3a.attempts.maximum: "10"
+
+online_store:
+    type: sqlite
+    path: data/online_store.db
+entity_key_serialization_version: 2

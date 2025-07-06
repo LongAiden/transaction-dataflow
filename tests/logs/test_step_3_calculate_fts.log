@@ -1,0 +1,4 @@
+2025-05-06 00:46:09,320 - test_step_3_register_table - INFO - Checking if bucket exists: temp-features
+2025-05-06 00:46:09,325 - test_step_3_register_table - INFO - Creating bucket: temp-features
+2025-05-06 00:46:09,332 - test_step_3_register_table - INFO - Bucket created: temp-features
+2025-05-06 00:46:24,875 - test_step_3_register_table - INFO - Createing Mock
